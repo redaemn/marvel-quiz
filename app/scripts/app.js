@@ -1,9 +1,11 @@
 'use strict';
 
 angular.module('marvelQuizApp', [
-  'ngCookies',
-  'ngResource',
-  'ngSanitize',
+  'marvelQuizApp.common',
+  'marvelQuizApp.quizzes',
+  // 'ngCookies',
+  // 'ngResource',
+  // 'ngSanitize',
   'ngRoute'
 ])
   .config(function ($routeProvider) {
@@ -16,3 +18,17 @@ angular.module('marvelQuizApp', [
         redirectTo: '/'
       });
   });
+
+/*
+ * Contains common functionalities
+ */
+angular.module('marvelQuizApp.common', [
+  'ngRoute'
+]);
+
+/*
+ * Contains all the supported quizzes
+ */
+angular.module('marvelQuizApp.quizzes', [
+  'marvelQuizApp.common'
+]);
