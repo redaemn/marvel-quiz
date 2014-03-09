@@ -25,7 +25,11 @@
     <![endif]-->
 
     <!-- Add your site or application content here -->
-    <div class="container" ng-view=""></div>
+    <div class="container">
+      <div ng-include="'views/common/header.html'"></div>
+      <div ng-view=""></div>
+      <div ng-include="'views/common/footer.html'"></div>
+    </div>
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
      <script>
@@ -59,6 +63,7 @@
         <!-- Marvel Quiz main app -->
         <script src="scripts/app.js"></script>
         <script src="scripts/controllers/main.js"></script>
+        <script src="scripts/controllers/navBar.js"></script>
         <script src="scripts/services/quiz.js"></script>
         <!-- Available quizzes, these MUST be loaded AFTER the main app -->
         <script src="quizzes/matchCharacters/scripts/main.js"></script>
