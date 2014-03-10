@@ -3,12 +3,12 @@
 angular.module('marvelQuizApp', [
   'marvelQuizApp.common',
   'marvelQuizApp.quizzes',
-  // 'ngCookies',
+  'ngCookies',
   // 'ngResource',
   // 'ngSanitize',
   'ngRoute'
 ])
-  .config(function ($routeProvider) {
+  .config(function ($routeProvider, MarvelWrapperProvider) {
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
@@ -17,13 +17,16 @@ angular.module('marvelQuizApp', [
       .otherwise({
         redirectTo: '/'
       });
+
+    MarvelWrapperProvider.setApiKey('fad24ca2acf5adc8c2e73d2ad1a8b06a');
   });
 
 /*
  * Contains common functionalities
  */
 angular.module('marvelQuizApp.common', [
-  'ngRoute'
+  'ngRoute',
+  'ngCookies'
 ]);
 
 /*
