@@ -5,13 +5,24 @@
  */
 
 angular.module('marvelQuizApp.common')
-  .service('Cache', function Cache($cookieStore) {
+  .service('Cache', function Cache($window) {
 
-    throw new Error ('Getting items from cache does not work! Method isExpired() does not exist!');
+    // IMPROVEMENT: I could use local storage to improve the cache duration time
+    // but then I should think about a strategy to garbage-collect old items
 
-    function CacheItem(data) {
+    var UNDEFINED,
+      sessionStorage = $window.sessionStorage || null,
+      cache;
+
+    // represents a cache item
+    function CacheItem(data, created) {
       this.data = data;
-      this.created = new Date();
+      if (created) {
+        this.created = new Date(created);
+      }
+      else {
+        this.created = new Date();
+      }
     }
 
     CacheItem.prototype.isExpired = function () {
@@ -20,38 +31,53 @@ angular.module('marvelQuizApp.common')
       return now - this.created > 1000 * 60 * 60 * 24; // 24 hours
     };
 
-    function loadMarvelQuizCache() {
-      return $cookieStore.get('MarvelQuizApp');
-    }
+    // load cache from session storage
+    function loadMarvelCache() {
+      var jsonCache, cache;
 
-    function saveMarvelQuizCache(newData) {
-      $cookieStore.put('MarvelQuizApp', newData);
-    }
-
-    function put(key, data) {
-
-      var cache = loadMarvelQuizCache() || {};
-
-      cache[key] = new CacheItem(data);
-
-      saveMarvelQuizCache(cache);
-    }
-
-    function get(key) {
-      var cache = loadMarvelQuizCache();
-
-      if (!cache || !cache[key]) {
-        return undefined;
-      }
-
-      if (!cache[key].isExpired()) {
-        return cache[key].data;
+      if (!sessionStorage || !( jsonCache = sessionStorage.getItem('MarvelQuizApp') )) {
+        return {};
       }
       else {
-        delete cache[key];
-        return undefined;
+        cache = {};
+        angular.forEach(angular.fromJson(jsonCache), function(val, key) {
+          cache[key] = new CacheItem(val.data, val.created);
+        });
+
+        return cache;
       }
     }
+
+    // persist cache to session storage
+    function persistMarvelCache(cache) {
+      if (sessionStorage) {
+        sessionStorage.setItem('MarvelQuizApp', angular.toJson(cache));
+      }
+    }
+
+    // put an item in the cache
+    function put(key, data) {
+      cache[key] = new CacheItem(data);
+      persistMarvelCache(cache);
+    }
+
+    // get an item from the cache
+    function get(key) {
+      if (!cache[key]) {
+        return UNDEFINED;
+      }
+      else if (cache[key].isExpired()) {
+        delete cache[key];
+        persistMarvelCache(cache);
+        return UNDEFINED;
+      }
+      else {
+        return cache[key].data;
+      }
+    }
+
+    // initialize cache for this app session
+    cache = loadMarvelCache();
 
     /*
      * Public API

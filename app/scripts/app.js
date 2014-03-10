@@ -3,7 +3,7 @@
 angular.module('marvelQuizApp', [
   'marvelQuizApp.common',
   'marvelQuizApp.quizzes',
-  'ngCookies',
+  //'ngCookies',
   // 'ngResource',
   // 'ngSanitize',
   'ngRoute'
@@ -25,8 +25,7 @@ angular.module('marvelQuizApp', [
  * Contains common functionalities
  */
 angular.module('marvelQuizApp.common', [
-  'ngRoute',
-  'ngCookies'
+  'ngRoute'
 ]);
 
 /*
