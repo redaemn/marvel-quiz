@@ -32,7 +32,7 @@ module.exports = function (grunt) {
         files: ['<%= yeoman.app %>/scripts/{,*/}*.js', '<%= yeoman.app %>/<%= yeoman.quizzes %>/scripts/{,*/}*.js'],
         tasks: ['newer:jshint:all'],
         options: {
-          livereload: true
+          livereload: process.env.C9_PROJECT ? false : true
         }
       },
       jsTest: {
@@ -64,11 +64,11 @@ module.exports = function (grunt) {
         port: process.env.C9_PROJECT ? process.env.PORT : 9000,
         // Change this to '0.0.0.0' to access the server from outside.
         hostname: 'localhost',
-        livereload: 35729
+        livereload: process.env.C9_PROJECT ? false : 35729
       },
       livereload: {
         options: {
-          open: true,
+          open: process.env.C9_PROJECT ? false : true,
           base: [
             '.tmp',
             '<%= yeoman.app %>'
