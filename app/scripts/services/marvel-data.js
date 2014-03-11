@@ -6,7 +6,8 @@ angular.module('marvelQuizApp.common')
     var PAGE_SIZE = 100;
 
     var getRandomCharacterDefaultParams = {
-      count: 1
+      count: 1,
+      withImageAvailable: false
     };
 
     /*
@@ -22,26 +23,61 @@ angular.module('marvelQuizApp.common')
       return MarvelWrapper
         .totalCharacters()
         .then(function (totalCharacters) {
-          var getCharacters = [];
-          for (var i = 0; i < params.count; ++i) {
-            (function() {
-              var randomCharacterNum = getRandomInt(0, totalCharacters - 1);
-              var randomPage = Math.ceil(randomCharacterNum / PAGE_SIZE);
-              getCharacters.push(MarvelWrapper.characters({
-                limit: PAGE_SIZE,
-                offset: PAGE_SIZE * ( randomPage - 1 )
-              }).then(function (characters) {
-                return characters[randomCharacterNum % PAGE_SIZE];
-              }));
-            }());
+          var getCharacters = [],
+            i;
+          for (i = 0; i < params.count; ++i) {
+            if (params.withImageAvailable) {
+              getCharacters.push(_charactersGetRandomWithAvailableImage(totalCharacters));
+            }
+            else {
+              getCharacters.push(_charactersGetRandom(totalCharacters));
+            }
           }
 
           return $q.all(getCharacters);
         });
     }
 
+    // get a single page of characters
+    function _charactersGetPage(pageNum) {
+      return MarvelWrapper.characters({
+        limit: PAGE_SIZE,
+        offset: PAGE_SIZE * ( pageNum - 1 )
+      });
+    }
+
+    // get a single random character among all of them
+    function _charactersGetRandom(totalCharacters) {
+      var randomCharacterNum = getRandomInt(0, totalCharacters - 1);
+      var randomPage = Math.ceil(randomCharacterNum / PAGE_SIZE);
+      return _charactersGetPage(randomPage)
+        .then(function (characters) {
+          return characters[randomCharacterNum % PAGE_SIZE];
+        });
+    }
+
+    // get a single random character with available image
+    function _charactersGetRandomWithAvailableImage(totalCharacters) {
+      return _charactersGetRandom(totalCharacters)
+        .then(function (character) {
+          if (isImageAvailable(character)) {
+            return character;
+          }
+          else {
+            return _charactersGetRandomWithAvailableImage(totalCharacters);
+          }
+        });
+    }
+
+    // return true if an image is available for a specific character
+    function isImageAvailable(character) {
+      var regexp = /^.+\/image_not_available$/;
+      return !regexp.test(character.thumbnail.path);
+    }
+
     /*
      * Generate a random integer between min and max (both inclusive)
+     * (put this inside a utility service)
      */
     function getRandomInt(min, max) {
       return Math.floor(Math.random() * (max - min + 1)) + min;
