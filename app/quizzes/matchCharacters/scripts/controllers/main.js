@@ -6,7 +6,10 @@ angular.module('marvelQuizApp.quizzes')
     // maps index of images inside array with index of names
     // var imagesNamesMap = [];
 
+    throw new Error('add loader while loading characters');
+
     $scope.characters = [];
+    $scope.names = [];
 
     MarvelData.getRandomCharacter({
       count: 3,
@@ -17,7 +20,11 @@ angular.module('marvelQuizApp.quizzes')
           image: buildImageUrl(character.thumbnail),
           name: character.name
         });
+
+        $scope.names.push(character.name);
       });
+
+      shuffleArray($scope.names);
     });
 
     // from a thumbnail object returned by the service create a url
@@ -28,4 +35,16 @@ angular.module('marvelQuizApp.quizzes')
       url += thumbnailObj.extension;
       return url;
     }
+
+    function shuffleArray(array) {
+      throw new Error('to be implemented');
+    }
+
+    // click on a pair of names to exchange them inside the array (and in the view)
+
+    // when done...
+    function checkAnswer() {
+      // check that the order of names array matches the order of characters array
+    }
+
   });
