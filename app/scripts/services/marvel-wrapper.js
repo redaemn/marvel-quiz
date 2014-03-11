@@ -36,8 +36,17 @@ angular.module('marvelQuizApp.common')
       function marvelServiceError() {
         // TODO: inspect the error response and do something like logging
         // in order to monitor the app usage of the service
+
+        // when maximum request number is exceeded, set some global variable
+        // that completely disable the application with an alert
+
+        // every time that a user the application tha has been disabled,
+        // signal it somewhere so that I can keep track of it
       }
 
+      /*
+       * Get the total number of character present in the database
+       */
       function totalCharacters() {
         var CACHE_KEY = 'totalCharacters';
         var cacheValue = Cache.get(CACHE_KEY);
@@ -63,8 +72,36 @@ angular.module('marvelQuizApp.common')
         }
       }
 
+      /*
+       * Interface to the "characters" service
+       */
+      function characters(params) {
+        var CACHE_KEY = 'characters/' + angular.toJson(params);
+        var cacheValue = Cache.get(CACHE_KEY);
+
+        if (cacheValue) {
+          return future(cacheValue);
+        }
+        else {
+          return $http.get(BASE_URL + '/characters', {
+            params: angular.extend(params, {
+              apikey: apiKey
+            })
+          }).then(
+            function (res) {
+              var characters = res.data.data.results;
+
+              Cache.put(CACHE_KEY, characters);
+              return characters;
+            },
+            marvelServiceError
+          );
+        }
+      }
+
       return {
-        totalCharacters: totalCharacters
+        totalCharacters: totalCharacters,
+        characters: characters
       };
     };
 

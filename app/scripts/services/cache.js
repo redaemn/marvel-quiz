@@ -10,6 +10,9 @@ angular.module('marvelQuizApp.common')
     // IMPROVEMENT: I could use local storage to improve the cache duration time
     // but then I should think about a strategy to garbage-collect old items
 
+    // TODO: make this service a provider and make it possible to configure
+    // cache duration time
+
     var UNDEFINED,
       sessionStorage = $window.sessionStorage || null,
       cache;
