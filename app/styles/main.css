@@ -78,6 +78,10 @@ body {
   }
 }
 
+.view-container {
+  margin-bottom: 30px;
+}
+
 .mq-match-characters-name-selected {
   color: gray;
 }
