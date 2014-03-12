@@ -4,16 +4,19 @@
 
 <div class="row">
   <div ng-repeat="character in characters" class="col-sm-4">
-    <div>
-      <img ng-src="{{character.image}}">
+    <div ng-if="character.url">
+      <a class="marvel-link" ng-href="{{character.url}}" target="_blank">More info</a>
     </div>
     <div>
-      {{character.name}}
+      <img ng-src="{{character.image}}">
     </div>
     <div ng-class="{ 'mq-match-characters-name-selected': isNameSelected($index) }">
       <span ng-click="selectName($index)">
         {{chosenNames[$index]}}
       </span>
+    </div>
+    <div>
+      {{correctNames[$index]}}
     </div>
   </div>
 </div>
@@ -21,7 +24,11 @@
 <div class="row">
   <div class="col-xs-12">
     <div class="pull-right">
-      <button type="button" class="btn btn-default" ng-click="restart()">Start again</button>
+      <span ng-show="answered && correctAnswer">Correct answer!</span>
+      <span ng-show="answered && !correctAnswer">Incorrect answer!</span>
+      <button type="button" class="btn btn-primary" ng-click="checkAnswer()" ng-hide="answered || loadingCharacters">Answer</button>
+      <button type="button" class="btn btn-primary" ng-click="showSolution()" ng-show="answered && !correctAnswer">Show solution</button>
+      <button type="button" class="btn btn-default" ng-click="restart()" ng-show="answered">Start again</button>
     </div>
   </div>
 </div>
