@@ -1,16 +1,27 @@
+<div ng-show="loadingCharacters">
+  Loading characters...
+</div>
+
 <div class="row">
-  <div ng-repeat="character in characters" class="col-md-4">
+  <div ng-repeat="character in characters" class="col-sm-4">
     <div>
       <img ng-src="{{character.image}}">
     </div>
-    <div class="correct-name">
+    <div>
       {{character.name}}
+    </div>
+    <div ng-class="{ 'mq-match-characters-name-selected': isNameSelected($index) }">
+      <span ng-click="selectName($index)">
+        {{chosenNames[$index]}}
+      </span>
     </div>
   </div>
 </div>
 
 <div class="row">
-  <div ng-repeat="character in characters" class="col-md-4">
-    {{character.name}}
+  <div class="col-xs-12">
+    <div class="pull-right">
+      <button type="button" class="btn btn-default" ng-click="restart()">Start again</button>
+    </div>
   </div>
 </div>

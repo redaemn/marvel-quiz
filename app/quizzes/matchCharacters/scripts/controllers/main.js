@@ -3,29 +3,59 @@
 angular.module('marvelQuizApp.quizzes')
   .controller('mq.matchCharacters.MainCtrl', function ($scope, MarvelData) {
 
-    // maps index of images inside array with index of names
-    // var imagesNamesMap = [];
+    var currentNameSelected;
 
-    throw new Error('add loader while loading characters');
+    function initQuiz() {
 
-    $scope.characters = [];
-    $scope.names = [];
+      $scope.characters = [];
+      $scope.chosenNames = [];
+      currentNameSelected = null;
+      $scope.loadingCharacters = true;
 
-    MarvelData.getRandomCharacter({
-      count: 3,
-      withImageAvailable: true
-    }).then(function(characters) {
-      angular.forEach(characters, function (character) {
-        $scope.characters.push({
-          image: buildImageUrl(character.thumbnail),
-          name: character.name
+      MarvelData.getRandomCharacter({
+        count: 3,
+        withImageAvailable: true
+      }).then(function(characters) {
+        angular.forEach(characters, function (character) {
+          $scope.characters.push({
+            image: buildImageUrl(character.thumbnail),
+            name: character.name
+          });
+          $scope.chosenNames.push(character.name);
         });
 
-        $scope.names.push(character.name);
+        shuffleArray($scope.chosenNames);
+
+        $scope.loadingCharacters = false;
       });
 
-      shuffleArray($scope.names);
-    });
+    }
+
+    initQuiz();
+
+    $scope.restart = initQuiz;
+
+    $scope.selectName = function selectName(index) {
+      var tmp;
+
+      if (currentNameSelected !== null) {
+        if (currentNameSelected !== index) {
+        // switch names
+          tmp = $scope.chosenNames[currentNameSelected];
+          $scope.chosenNames[currentNameSelected] = $scope.chosenNames[index];
+          $scope.chosenNames[index] = tmp;
+        }
+
+        currentNameSelected = null;
+      }
+      else {
+        currentNameSelected = index;
+      }
+    };
+
+    $scope.isNameSelected = function isNameSelected(index) {
+      return index === currentNameSelected;
+    };
 
     // from a thumbnail object returned by the service create a url
     // to be used inside <img> src attribute (put this inside a utility service)
@@ -36,15 +66,26 @@ angular.module('marvelQuizApp.quizzes')
       return url;
     }
 
+    // (put this inside a utility service)
     function shuffleArray(array) {
-      throw new Error('to be implemented');
-    }
+      var currentIndex = array.length,
+        tmp,
+        randomIndex;
 
-    // click on a pair of names to exchange them inside the array (and in the view)
+      // while there are elements to shuffle...
+      while (0 !== currentIndex) {
 
-    // when done...
-    function checkAnswer() {
-      // check that the order of names array matches the order of characters array
+        // pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+
+        // swap it with the current element.
+        tmp = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = tmp;
+      }
+
+      return array;
     }
 
   });
