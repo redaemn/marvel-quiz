@@ -49,6 +49,10 @@ angular.module('marvelQuizApp.quizzes')
     $scope.selectName = function selectName(index) {
       var tmp;
 
+      if ($scope.answered) {
+        return;
+      }
+
       if (currentNameSelected !== null) {
         if (currentNameSelected !== index) {
         // switch names
@@ -103,6 +107,7 @@ angular.module('marvelQuizApp.quizzes')
     // (put this inside a utility service)
     function getCharacterUrl(urlsObj) {
       return urlsObj.length ? urlsObj[0].url : null;
+      // TODO: get url of type "wiki" if available
     }
 
     // (put this inside a utility service)
