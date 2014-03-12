@@ -3,7 +3,7 @@
 angular.module('marvelQuizApp.common')
   .service('MarvelData', function MarvelData(MarvelWrapper, $q) {
 
-    var PAGE_SIZE = 100;
+    var PAGE_SIZE = 10;
 
     var getRandomCharacterDefaultParams = {
       count: 1,
@@ -49,7 +49,7 @@ angular.module('marvelQuizApp.common')
     // get a single random character among all of them
     function _charactersGetRandom(totalCharacters) {
       var randomCharacterNum = getRandomInt(0, totalCharacters - 1);
-      var randomPage = Math.ceil(randomCharacterNum / PAGE_SIZE);
+      var randomPage = Math.ceil((randomCharacterNum + 1 ) / PAGE_SIZE);
       return _charactersGetPage(randomPage)
         .then(function (characters) {
           return characters[randomCharacterNum % PAGE_SIZE];
