@@ -5,7 +5,7 @@
  * errors
  */
 angular.module('marvelQuizApp.common')
-  .provider('MarvelWrapper', function MarvelWrapper() {
+  .provider('MarvelWrapper', function MarvelWrapperProvider() {
 
     /*
      * Private provider variables
@@ -24,7 +24,7 @@ angular.module('marvelQuizApp.common')
     /*
      * Service constructor
      */
-    this.$get = function ($http, Cache, $q) {
+    this.$get = function MarvelWrapper($http, Cache, $q, GoogleAnalytics) {
       var BASE_URL = 'http://gateway.marvel.com/v1/public';
 
       // returns a promise for a constant value
@@ -37,15 +37,19 @@ angular.module('marvelQuizApp.common')
       }
 
       // common function that handles error responses from marvel services
-      function marvelServiceError() {
-        // TODO: inspect the error response and do something like logging
-        // in order to monitor the app usage of the service
-
-        // when maximum request number is exceeded, set some global variable
+      function marvelServiceError(res) {
+        // TODO: when maximum request number is exceeded, set some global variable
         // that completely disable the application with an alert
 
-        // every time that a user the application tha has been disabled,
+        // every time that a user access the application that has been disabled,
         // signal it somewhere so that I can keep track of it
+
+        if (res.status === 429) {
+          GoogleAnalytics.marvelServiceLimitExceeded();
+        }
+        else {
+          GoogleAnalytics.marvelServiceError('' + res.status + ' - ' + res.data);
+        }
       }
 
       /*
@@ -69,6 +73,7 @@ angular.module('marvelQuizApp.common')
               var count = res.data.data.total;
 
               Cache.put(CACHE_KEY, count);
+              GoogleAnalytics.marvelServiceRequest('characters');
               return count;
             },
             marvelServiceError
@@ -96,6 +101,7 @@ angular.module('marvelQuizApp.common')
               var characters = res.data.data.results;
 
               Cache.put(CACHE_KEY, characters);
+              GoogleAnalytics.marvelServiceRequest('characters');
               return characters;
             },
             marvelServiceError
