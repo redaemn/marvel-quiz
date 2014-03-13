@@ -5,9 +5,9 @@
 <div class="row">
   <div ng-repeat="character in characters" class="col-sm-4">
     <div ng-if="character.url">
-      <a class="marvel-link" ng-href="{{character.url}}" target="_blank">
+      <marvel-link url="{{character.url}}">
         Character info <span class="glyphicon glyphicon-new-window"></span>
-      </a>
+      </marvel-link>
     </div>
     <div>
       <img ng-src="{{character.image}}">
