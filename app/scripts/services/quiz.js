@@ -6,34 +6,24 @@
  * Every quiz registers itself to this service
  */
 angular.module('marvelQuizApp.common')
-  .provider('quiz', function ($routeProvider) {
-
-    /*
-     * Private variables
-     */
+  .provider('Quiz', function QuizProvider($routeProvider) {
 
     // contains all quiz names currently known
-    var quizzes = {};
-    var quizzesCopy = null;
-
-    // default config for the register method
-    var defaultRegisterConfig = {
-      quizName: '',
-      controller: '',
-      templateUrl: ''
-    };
-
-    /*
-     * Private methods
-     */
+    var quizzes = {},
+      // default config for the register method
+      defaultRegisterConfig = {
+        quizName: '',
+        controller: '',
+        templateUrl: ''
+      };
 
     // remove the "mq" prefix from a quiz name
-    function removePrefix(quizName) {
+    function _removePrefix(quizName) {
       return quizName.replace(/^mq\./, '');
     }
 
     // substitute the camel case letters with a separator followed by the same letter in lower case
-    function camelCaseToSeparator(text, separator) {
+    function _camelCaseToSeparator(text, separator) {
       if (separator === undefined) {
         separator = ' ';
       }
@@ -43,34 +33,24 @@ angular.module('marvelQuizApp.common')
     }
 
     // transform all the words in text to upper case
-    function ucwords(text) {
+    function _ucwords(text) {
       return text.replace(/^([a-z])|\s+([a-z])/g, function ($1) {
         return $1.toUpperCase();
       });
     }
 
     // generate the route for a particular quiz name
-    function getRoute(quizName) {
-      return '/quiz/' + camelCaseToSeparator(removePrefix(quizName), '-');
+    function _getRoute(quizName) {
+      return '/quiz/' + _camelCaseToSeparator(_removePrefix(quizName), '-');
     }
 
     // generate the display name for a particualr quiz name
-    function getDisplayName(quizName) {
-      return ucwords(camelCaseToSeparator(removePrefix(quizName)));
-    }
-
-    // return a read-only copy of all the quizzes added
-    function getAllQuizzes() {
-      // since quizzes cannot be modified after app configuration phase, I need to copy them just once
-      if (quizzesCopy === null) {
-        quizzesCopy = angular.copy(quizzes);
-      }
-
-      return quizzesCopy;
+    function _getDisplayName(quizName) {
+      return _ucwords(_camelCaseToSeparator(_removePrefix(quizName)));
     }
 
     /*
-     * Public API for configuration
+     * Register a new quiz
      */
     this.register = function (config) {
       config = angular.extend({}, defaultRegisterConfig, config);
@@ -81,8 +61,8 @@ angular.module('marvelQuizApp.common')
 
       if (!quizzes[config.quizName]) {
         quizzes[config.quizName] = {
-          displayName: getDisplayName(config.quizName),
-          route: getRoute(config.quizName)
+          displayName: _getDisplayName(config.quizName),
+          route: _getRoute(config.quizName)
         };
 
         $routeProvider
@@ -97,9 +77,23 @@ angular.module('marvelQuizApp.common')
     };
 
     /*
-     * Method for instantiating
+     * Service constructor
      */
-    this.$get = function () {
+    this.$get = function Quiz () {
+      var quizzesCopy = null;
+
+      /*
+       * Return a read-only copy of all the quizzes added
+       */
+      function getAllQuizzes() {
+        // since quizzes cannot be modified after app configuration phase, I need to copy them just once
+        if (quizzesCopy === null) {
+          quizzesCopy = angular.copy(quizzes);
+        }
+
+        return quizzesCopy;
+      }
+
       return {
         getAllQuizzes: getAllQuizzes
       };

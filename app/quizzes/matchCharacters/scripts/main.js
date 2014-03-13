@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('marvelQuizApp.quizzes')
-  .config(function (quizProvider) {
-    quizProvider
+  .config(function (QuizProvider) {
+    QuizProvider
       .register({
         quizName: 'mq.matchCharacters',
         controller: 'mq.matchCharacters.MainCtrl',
