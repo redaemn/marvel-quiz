@@ -33,15 +33,14 @@
       <div ng-include="'views/common/footer.html'"></div>
     </div>
 
-    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
-     <script>
-       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    <!-- Google Analytics -->
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-       ga('create', 'UA-XXXXX-X');
-       ga('send', 'pageview');
+      ga('create', 'UA-41055822-5', 'redaemn.github.io');
     </script>
 
     <!--[if lt IE 9]>
@@ -70,7 +69,8 @@
         <script src="scripts/services/marvel-wrapper.js"></script>
         <script src="scripts/services/marvel-data.js"></script>
         <script src="scripts/services/cache.js"></script>
-        <!-- Available quizzes, these MUST be loaded AFTER the main app -->
+        <script src="scripts/services/google-analytics.js"></script>
+        <!-- Available quizzes -->
         <script src="quizzes/matchCharacters/scripts/main.js"></script>
         <script src="quizzes/matchCharacters/scripts/controllers/main.js"></script>
         <!-- endbuild -->
