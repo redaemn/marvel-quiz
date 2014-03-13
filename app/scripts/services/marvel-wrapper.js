@@ -7,15 +7,11 @@
 angular.module('marvelQuizApp.common')
   .provider('MarvelWrapper', function MarvelWrapperProvider() {
 
-    /*
-     * Private provider variables
-     */
-
     // contains the Marvel API key to attach to every request
     var apiKey;
 
     /*
-     * Public API for configuration
+     * Set Marvel's API key
      */
     this.setApiKey = function (newKey) {
       apiKey = newKey;
@@ -27,8 +23,10 @@ angular.module('marvelQuizApp.common')
     this.$get = function MarvelWrapper($http, Cache, $q, GoogleAnalytics) {
       var BASE_URL = 'http://gateway.marvel.com/v1/public';
 
-      // returns a promise for a constant value
-      function future(value) {
+      /*
+       * Returns a promise for a constant value
+       */
+      function _future(value) {
         var deferred = $q.defer();
 
         deferred.resolve(value);
@@ -36,8 +34,10 @@ angular.module('marvelQuizApp.common')
         return deferred.promise;
       }
 
-      // common function that handles error responses from marvel services
-      function marvelServiceError(res) {
+      /*
+       * Common function that handles error responses from marvel services
+       */
+      function _marvelServiceError(res) {
         // TODO: when maximum request number is exceeded, set some global variable
         // that completely disable the application with an alert
 
@@ -60,7 +60,7 @@ angular.module('marvelQuizApp.common')
         var cacheValue = Cache.get(CACHE_KEY);
 
         if (cacheValue) {
-          return future(cacheValue);
+          return _future(cacheValue);
         }
         else {
           return $http.get(BASE_URL + '/characters', {
@@ -76,7 +76,7 @@ angular.module('marvelQuizApp.common')
               GoogleAnalytics.marvelServiceRequest('characters');
               return count;
             },
-            marvelServiceError
+            _marvelServiceError
           );
         }
       }
@@ -89,7 +89,7 @@ angular.module('marvelQuizApp.common')
         var cacheValue = Cache.get(CACHE_KEY);
 
         if (cacheValue) {
-          return future(cacheValue);
+          return _future(cacheValue);
         }
         else {
           return $http.get(BASE_URL + '/characters', {
@@ -104,7 +104,7 @@ angular.module('marvelQuizApp.common')
               GoogleAnalytics.marvelServiceRequest('characters');
               return characters;
             },
-            marvelServiceError
+            _marvelServiceError
           );
         }
       }
