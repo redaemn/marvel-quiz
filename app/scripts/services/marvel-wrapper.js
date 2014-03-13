@@ -1,5 +1,9 @@
 'use strict';
 
+/*
+ * Wraps Marvel's rest API and does things like caching results and logging
+ * errors
+ */
 angular.module('marvelQuizApp.common')
   .provider('MarvelWrapper', function MarvelWrapper() {
 

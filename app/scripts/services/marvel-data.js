@@ -1,5 +1,8 @@
 'use strict';
 
+/*
+ * Offers higher level functionalities to access Marvel's data
+ */
 angular.module('marvelQuizApp.common')
   .service('MarvelData', function MarvelData(MarvelWrapper, $q) {
 

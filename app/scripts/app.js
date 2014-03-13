@@ -1,5 +1,8 @@
 'use strict';
 
+/*
+ * Main module, loads everything else
+ */
 angular.module('marvelQuizApp', [
   'marvelQuizApp.common',
   'marvelQuizApp.quizzes',

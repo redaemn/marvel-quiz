@@ -1,5 +1,10 @@
 'use strict';
 
+/*
+ * Contains all the quizzes available in the application and various ways to
+ * chose among them.
+ * Every quiz registers itself to this service
+ */
 angular.module('marvelQuizApp.common')
   .provider('quiz', function ($routeProvider) {
 
