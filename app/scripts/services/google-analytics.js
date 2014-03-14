@@ -26,7 +26,7 @@ angular.module('marvelQuizApp.common')
     /*
      * Register a request to a Marvel service
      *
-     * @param String service name of the service that was requested
+     * @param {String} service - name of the service that was requested
      */
     function marvelServiceRequest(service) {
       ga('send', 'event', 'marvel-service', 'request', service);
@@ -35,7 +35,7 @@ angular.module('marvelQuizApp.common')
     /*
      * Register an error returned by a request to a Marvel service
      *
-     * @param String message the error message received in the response
+     * @param {String} message - the error message received in the response
      */
     function marvelServiceError(message) {
       ga('send', 'event', 'marvel-service', 'error-response', message);
