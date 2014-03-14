@@ -14,10 +14,15 @@ angular.module('marvelQuizApp.common')
     // cache duration time
 
     var UNDEFINED,
-      sessionStorage = $window.sessionStorage || null,
+      storage = $window.localStorage || null,
       cache;
 
-    // represents a cache item
+    /*
+     * Create a cache item
+     *
+     * @param {Object} data
+     * @param {Date} [created]
+     */
     function CacheItem(data, created) {
       this.data = data;
       if (created) {
@@ -34,44 +39,69 @@ angular.module('marvelQuizApp.common')
       return now - this.created > 1000 * 60 * 60 * 24; // 24 hours
     };
 
-    // load cache from session storage
-    function loadMarvelCache() {
-      var jsonCache, cache;
+    /*
+     * load cache from browser storage
+     */
+    function _loadMarvelCache() {
+      var jsonCache, cache, modified = false;
 
-      if (!sessionStorage || !( jsonCache = sessionStorage.getItem('MarvelQuizApp') )) {
+      if (!storage || !( jsonCache = storage.getItem('MarvelQuizApp') )) {
         return {};
       }
       else {
         cache = {};
         angular.forEach(angular.fromJson(jsonCache), function(val, key) {
-          cache[key] = new CacheItem(val.data, val.created);
+          var cacheItem = new CacheItem(val.data, val.created);
+          
+          if (!cacheItem.isExpired()) {
+            cache[key] = cacheItem;              
+          }
+          else {
+            modified = true;
+          }
+          
         });
+        
+        if (modified) {
+          _persisteMarvelCache(cache);
+        }
 
         return cache;
       }
     }
 
-    // persist cache to session storage
-    function persistMarvelCache(cache) {
-      if (sessionStorage) {
-        sessionStorage.setItem('MarvelQuizApp', angular.toJson(cache));
+    /*
+     * Persist cache to browser storage
+     */
+    function _persistMarvelCache(cache) {
+      if (storage) {
+        storage.setItem('MarvelQuizApp', angular.toJson(cache));
       }
     }
 
-    // put an item in the cache
+    /*
+     * Put an item in the cache
+     *
+     * @param {String} key
+     * @param {Object} data
+     */
     function put(key, data) {
       cache[key] = new CacheItem(data);
-      persistMarvelCache(cache);
+      _persistMarvelCache(cache);
     }
 
-    // get an item from the cache
+    /*
+     * Get an item from the cache
+     *
+     * @param {String} key
+     */
     function get(key) {
       if (!cache[key]) {
         return UNDEFINED;
       }
       else if (cache[key].isExpired()) {
         delete cache[key];
-        persistMarvelCache(cache);
+        _persistMarvelCache(cache);
         return UNDEFINED;
       }
       else {
@@ -80,7 +110,7 @@ angular.module('marvelQuizApp.common')
     }
 
     // initialize cache for this app session
-    cache = loadMarvelCache();
+    cache = _loadMarvelCache();
 
     /*
      * Public API
