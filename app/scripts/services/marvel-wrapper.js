@@ -21,7 +21,7 @@ angular.module('marvelQuizApp.common')
      * Service constructor
      */
     this.$get = function MarvelWrapper($http, Cache, $q, GoogleAnalytics) {
-      var BASE_URL = 'http://gateway.marvel.com/v1/public';
+      var BASE_URL = '//gateway.marvel.com/v1/public';
 
       /*
        * Returns a promise for a constant value
