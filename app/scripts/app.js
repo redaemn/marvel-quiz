@@ -14,8 +14,8 @@ angular.module('marvelQuizApp', [
   .config(function ($routeProvider, MarvelWrapperProvider) {
     $routeProvider
       .when('/', {
-        templateUrl: 'views/main.html',
-        controller: 'MainCtrl'
+        templateUrl: 'views/home.html',
+        controller: 'HomeCtrl'
       })
       .otherwise({
         redirectTo: '/'
