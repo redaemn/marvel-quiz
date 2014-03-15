@@ -29,6 +29,9 @@
     <!-- Add your site or application content here -->
     <div class="container">
       <div ng-include="'views/common/header.html'"></div>
+      <noscript>
+        {% include common/header.html %}
+      </noscript>
       <div class="view-container">
         <div ng-view=""></div>
         <noscript>
@@ -36,6 +39,9 @@
         </noscript>
       </div>
       <div ng-include="'views/common/footer.html'"></div>
+      <noscript>
+        {% include common/footer.html %}
+      </noscript>
     </div>
 
     <!-- Google Analytics -->
