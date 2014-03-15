@@ -53,7 +53,7 @@ angular.module('marvelQuizApp.common')
      * load cache from browser storage
      */
     function _loadMarvelCache() {
-      var jsonCache, cache, modified = false;
+      var jsonCache, cache;
 
       if (!storage || !( jsonCache = storage.getItem('MarvelQuizApp') )) {
         return {};
@@ -66,15 +66,8 @@ angular.module('marvelQuizApp.common')
           if (!cacheItem.isExpired()) {
             cache[key] = cacheItem;
           }
-          else {
-            modified = true;
-          }
 
         });
-
-        if (modified) {
-          _persistMarvelCache(cache);
-        }
 
         return cache;
       }
@@ -85,9 +78,7 @@ angular.module('marvelQuizApp.common')
      */
     function _persistMarvelCache(cache) {
       if (storage) {
-        $timeout(function() {
-          storage.setItem('MarvelQuizApp', angular.toJson(cache));
-        });
+        storage.setItem('MarvelQuizApp', angular.toJson(cache));
       }
     }
 
@@ -103,7 +94,6 @@ angular.module('marvelQuizApp.common')
       cache[key] = angular.isDefined(expiration) ?
         new CacheItem(data, null, expiration) :
         new CacheItem(data);
-      _persistMarvelCache(cache);
     }
 
     /*
@@ -117,7 +107,6 @@ angular.module('marvelQuizApp.common')
       }
       else if (cache[key].isExpired()) {
         delete cache[key];
-        _persistMarvelCache(cache);
         return UNDEFINED;
       }
       else {
@@ -127,6 +116,11 @@ angular.module('marvelQuizApp.common')
 
     // initialize cache for this app session
     cache = _loadMarvelCache();
+
+    // persist cache to browser storage on page closing
+    angular.element($window).on('unload', function() {
+      _persistMarvelCache(cache);
+    });
 
     /*
      * Public API
