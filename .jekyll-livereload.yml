@@ -1,2 +1,2 @@
 include: []
-exclude: ['bower_components','fonts','images','quizzes','scripts','styles','.htaccess','favicon.ico','robots.txt']
+exclude: ['bower_components', 'fonts', 'images', 'quizzes', 'scripts', 'styles', '.htaccess', 'favicon.ico', 'robots.txt']
