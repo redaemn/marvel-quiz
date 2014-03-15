@@ -52,18 +52,18 @@ angular.module('marvelQuizApp.common')
         cache = {};
         angular.forEach(angular.fromJson(jsonCache), function(val, key) {
           var cacheItem = new CacheItem(val.data, val.created);
-          
+
           if (!cacheItem.isExpired()) {
-            cache[key] = cacheItem;              
+            cache[key] = cacheItem;
           }
           else {
             modified = true;
           }
-          
+
         });
-        
+
         if (modified) {
-          _persisteMarvelCache(cache);
+          _persistMarvelCache(cache);
         }
 
         return cache;
