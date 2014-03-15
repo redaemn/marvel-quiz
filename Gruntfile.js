@@ -53,7 +53,7 @@ module.exports = function (grunt) {
       jekyllViews: {
         files: [
           '<%= yeoman.app %>/*.html',
-          '<%= yeoman.app %>/views/*.html',
+          '<%= yeoman.app %>/views/**/*.html',
           '<%= yeoman.app %>/_includes/**/*.html'
         ],
         tasks: ['jekyll:livereload']
@@ -105,14 +105,14 @@ module.exports = function (grunt) {
         }
       }
     },
-    
+
     // Run jekyll
     jekyll: {
       options: {
         src: 'app',
       },
       dist: {
-        
+
       },
       livereload: {
         options: {
