@@ -23,13 +23,17 @@ module.exports = function (grunt) {
       // configurable paths
       app: require('./bower.json').appPath || 'app',
       dist: 'dist',
-      quizzes: 'quizzes/*'
+      quizzes: 'quizzes/*',
+      jekyllSite: '_site'
     },
 
     // Watches files for changes and runs tasks based on the changed files
     watch: {
       js: {
-        files: ['<%= yeoman.app %>/scripts/{,*/}*.js', '<%= yeoman.app %>/<%= yeoman.quizzes %>/scripts/{,*/}*.js'],
+        files: [
+          '<%= yeoman.app %>/scripts/{,*/}*.js',
+          '<%= yeoman.app %>/<%= yeoman.quizzes %>/scripts/{,*/}*.js'
+        ],
         tasks: ['newer:jshint:all'],
         options: {
           livereload: process.env.C9_PROJECT ? false : true
@@ -46,12 +50,21 @@ module.exports = function (grunt) {
       gruntfile: {
         files: ['Gruntfile.js']
       },
+      jekyllViews: {
+        files: [
+          '<%= yeoman.app %>/*.html',
+          '<%= yeoman.app %>/views/*.html',
+          '<%= yeoman.app %>/_includes/**/*.html'
+        ],
+        tasks: ['jekyll:livereload']
+      },
       livereload: {
         options: {
           livereload: '<%= connect.options.livereload %>'
         },
         files: [
-          '<%= yeoman.app %>/**/*.html',
+          '<%= yeoman.app %>/quizzes/**/*.html',
+          '<%= yeoman.jekyllSite %>/**/*.html',
           '.tmp/styles/{,*/}*.css',
           '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
         ]
@@ -71,6 +84,7 @@ module.exports = function (grunt) {
           open: process.env.C9_PROJECT ? false : true,
           base: [
             '.tmp',
+            '_site',
             '<%= yeoman.app %>'
           ]
         }
@@ -88,6 +102,21 @@ module.exports = function (grunt) {
       dist: {
         options: {
           base: '<%= yeoman.dist %>'
+        }
+      }
+    },
+    
+    // Run jekyll
+    jekyll: {
+      options: {
+        src: 'app',
+      },
+      dist: {
+        
+      },
+      livereload: {
+        options: {
+          config: '.jekyll-livereload.yml'
         }
       }
     },
@@ -261,7 +290,8 @@ module.exports = function (grunt) {
             '<%= yeoman.quizzes %>/views/{,*/}*.html',
             'bower_components/**/*',
             'images/{,*/}*.{webp}',
-            'fonts/*'
+            'fonts/*',
+            '_includes/**/*'
           ]
         }, {
           expand: true,
@@ -281,7 +311,8 @@ module.exports = function (grunt) {
     // Run some tasks in parallel to speed up the build process
     concurrent: {
       server: [
-        'copy:styles'
+        'copy:styles',
+        'jekyll:livereload'
       ],
       test: [
         'copy:styles'
