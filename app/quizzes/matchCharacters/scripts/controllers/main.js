@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('marvelQuizApp.quizzes')
-  .controller('mq.matchCharacters.MainCtrl', function ($scope, MarvelData) {
+  .controller('mq.matchCharacters.MainCtrl', function ($scope, MarvelData, QUIZ_EVENTS) {
 
     // contain the index of the currently selected name inside chosenNames array
     var currentNameSelected;
@@ -37,6 +37,10 @@ angular.module('marvelQuizApp.quizzes')
         shuffleArray($scope.chosenNames);
 
         $scope.loadingCharacters = false;
+
+        $scope.$emit(QUIZ_EVENTS.quizStart, {
+          quizName: 'matchCharacters'
+        });
       });
 
     }
@@ -86,6 +90,17 @@ angular.module('marvelQuizApp.quizzes')
       });
 
       $scope.correctAnswer = correctAnswer;
+
+      if (correctAnswer) {
+        $scope.$emit(QUIZ_EVENTS.correctAnswer, {
+          quizName: 'matchCharacters'
+        });
+      }
+      else {
+        $scope.$emit(QUIZ_EVENTS.wrongAnswer, {
+          quizName: 'matchCharacters'
+        });
+      }
     };
 
     // show the correct solution to the quiz
