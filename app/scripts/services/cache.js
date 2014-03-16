@@ -5,7 +5,7 @@
  */
 
 angular.module('marvelQuizApp.common')
-  .service('Cache', function Cache($window, $timeout) {
+  .service('Cache', function Cache($window) {
 
     // TODO: make this service a provider and make it possible to configure
     // cache duration time
