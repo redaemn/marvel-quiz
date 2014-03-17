@@ -6,7 +6,7 @@ body {
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
 .header,
-.marketing,
+.view-container,
 .footer {
   padding-left: 15px;
   padding-right: 15px;
@@ -37,9 +37,6 @@ body {
     max-width: 730px;
   }
 }
-.container-narrow > hr {
-  margin: 30px 0;
-}
 
 /* Main marketing message and sign up button */
 .jumbotron {
@@ -51,33 +48,22 @@ body {
   padding: 14px 24px;
 }
 
-/* Supporting marketing content */
-.marketing {
-  margin: 40px 0;
-}
-.marketing p + h4 {
-  margin-top: 28px;
+.header,
+.view-container {
+  margin-bottom: 25px;
 }
 
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
   /* Remove the padding we set earlier */
   .header,
-  .marketing,
+  .view-container,
   .footer {
     padding-left: 0;
     padding-right: 0;
-  }
-  /* Space out the masthead */
-  .header {
-    margin-bottom: 30px;
   }
   /* Remove the bottom border on the jumbotron for visual effect */
   .jumbotron {
     border-bottom: 0;
   }
-}
-
-.view-container {
-  margin-bottom: 30px;
 }
