@@ -22,14 +22,14 @@ angular.module('marvelQuizApp.quizzes')
       $scope.loadingCharacters = true;
 
       MarvelData.getRandomCharacter({
-        count: 3,
+        count: 4,
         withImageAvailable: true
       }).then(function(characters) {
         angular.forEach(characters, function (character) {
           $scope.characters.push({
-            image: buildImageUrl(character.thumbnail),
+            image: character.thumbnail,
             name: character.name,
-            url: getCharacterUrl(character.urls)
+            urls: character.urls
           });
           $scope.chosenNames.push(character.name);
         });
@@ -103,6 +103,11 @@ angular.module('marvelQuizApp.quizzes')
       }
     };
 
+    // return true if the name in position idx is correct, false otherwise
+    $scope.isNameCorrect = function isNameCorrect(idx) {
+      return $scope.chosenNames[idx] === $scope.characters[idx].name;
+    };
+
     // show the correct solution to the quiz
     $scope.showSolution = function showSolution() {
       angular.forEach($scope.characters, function(character) {
@@ -114,15 +119,26 @@ angular.module('marvelQuizApp.quizzes')
     // to be used inside <img> src attribute (put this inside a utility service)
     function buildImageUrl(thumbnailObj) {
       var url = thumbnailObj.path;
-      url += '/portrait_fantastic.';
+      url += '/landscape_incredible.';
       url += thumbnailObj.extension;
       return url;
     }
 
     // (put this inside a utility service)
-    function getCharacterUrl(urlsObj) {
-      return urlsObj.length ? urlsObj[0].url : null;
-      // TODO: get url of type "wiki" if available
+    function getCharacterUrl(urlsArray) {
+      var url;
+
+      angular.forEach(urlsArray, function(urlObj) {
+        if (urlObj.type === 'wiki') {
+          url = urlObj.url;
+        }
+      });
+
+      if (!url && urlsArray.length) {
+        url = urlsArray[0].url;
+      }
+
+      return url;
     }
 
     // (put this inside a utility service)

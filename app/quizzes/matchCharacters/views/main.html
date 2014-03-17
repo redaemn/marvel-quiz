@@ -1,38 +1,52 @@
-<div ng-show="loadingCharacters">
+<p class="lead">
+  Match every character image with its correct name.<br>
+  <span class="small text-muted">Click on two names to switch them.</span>
+</p>
+
+<div class="alert alert-info text-center" ng-show="loadingCharacters">
   Loading characters...
 </div>
 
 <div class="row">
-  <div ng-repeat="character in characters" class="col-sm-4">
-    <div ng-if="character.url">
-      <marvel-link url="{{character.url}}">
-        Character info <span class="glyphicon glyphicon-new-window"></span>
-      </marvel-link>
-    </div>
-    <div>
-      <img ng-src="{{character.image}}">
-    </div>
-    <div ng-class="{ 'mq-match-characters-name-selected': isNameSelected($index) }">
-      <span ng-click="selectName($index)">
-        {{chosenNames[$index]}}
-      </span>
-    </div>
-    <div>
-      {{correctNames[$index]}}
+  <div ng-repeat-start="character in characters" class="col-sm-6">
+    <div class="thumbnail">
+      <img ng-src="{{character.image.path}}/standard_fantastic.{{character.image.extension}}">
+      <div class="caption">
+        <h4>
+          <span
+            ng-class="{ 'text-muted': isNameSelected($index), 'text-danger': answered && !isNameCorrect($index), 'text-success': answered && isNameCorrect($index) }"
+            ng-click="selectName($index)" ng-style="!answered ? { cursor: 'pointer' } : {}">
+            {{chosenNames[$index]}}
+          </span>
+        </h4>
+        <h5 class="text-success">
+          {{correctNames[$index]}}&nbsp;
+        </h5>
+        <ul class="list-inline" style="text-transform: capitalize;">
+          <li ng-repeat="url in character.urls" >
+            <marvel-link url="{{url.url}}">
+              {{url.type}} <span class="glyphicon glyphicon-new-window"></span>
+            </marvel-link>
+          </li>
+          <!-- <br ng-repeat-end ng-if="!$last"> -->
+        </ul>
+      </div>
     </div>
   </div>
+  <div ng-repeat-end ng-if="$index === 1" class="clearfix hidden-xs"></div>
 </div>
 
 <div class="row">
-  <div class="col-xs-12">
-    <div class="pull-right">
-      <span ng-show="answered && correctAnswer">Correct answer!</span>
-      <span ng-show="answered && !correctAnswer">Incorrect answer!</span>
-      <button type="button" class="btn btn-primary" ng-click="checkAnswer()" ng-hide="answered || loadingCharacters">Answer</button>
-      <button type="button" class="btn btn-primary" ng-click="showSolution()" ng-show="answered && !correctAnswer">Show solution</button>
-      <button type="button" class="btn btn-default" ng-click="restart()" ng-show="answered">
-        <span class="glyphicon glyphicon-refresh"></span> Start again
-      </button>
-    </div>
+  <div class="col-sm-5">
+    <div class="alert alert-success text-center" ng-show="answered && correctAnswer">&#x2714; Your answer is <strong>correct!</strong></div>
+    <div class="alert alert-danger text-center" ng-show="answered && !correctAnswer">&#x2718; Your answer is <strong>incorrect!</strong></div>
   </div>
+  <div class="col-sm-7 text-right">
+    <button type="button" class="btn btn-primary" ng-click="checkAnswer()" ng-hide="answered || loadingCharacters">Answer</button>
+    <button type="button" class="btn btn-primary" ng-click="showSolution()" ng-show="answered && !correctAnswer">Show solution</button>
+    <button type="button" class="btn btn-default" ng-click="restart()" ng-show="answered">
+      <span class="glyphicon glyphicon-refresh"></span> Play again
+    </button>
+  </div>
+</div>
 </div>
