@@ -1,27 +1,7 @@
 /* Space out content a bit */
 body {
-  padding-top: 20px;
+  padding-top: 70px;
   padding-bottom: 20px;
-}
-
-/* Everything but the jumbotron gets side spacing for mobile first views */
-.header,
-.view-container,
-.footer {
-  padding-left: 15px;
-  padding-right: 15px;
-}
-
-/* Custom page header */
-.header {
-  border-bottom: 1px solid #e5e5e5;
-}
-/* Make the masthead heading the same height as the navigation */
-.header h3 {
-  margin-top: 0;
-  margin-bottom: 0;
-  line-height: 40px;
-  padding-bottom: 19px;
 }
 
 /* Custom page footer */
@@ -48,22 +28,35 @@ body {
   padding: 14px 24px;
 }
 
-.header,
 .view-container {
   margin-bottom: 25px;
 }
 
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
-  /* Remove the padding we set earlier */
-  .header,
-  .view-container,
-  .footer {
-    padding-left: 0;
-    padding-right: 0;
-  }
   /* Remove the bottom border on the jumbotron for visual effect */
   .jumbotron {
     border-bottom: 0;
+  }
+  /* Add footer margins in mobile */
+  .footer {
+    margin-left: 15px;
+    margin-right: 15px;
+  }
+  /* Fix wrong bootstrap style */
+  .navbar-nav.navbar-right:last-child {
+    margin-right: 0px;
+  }
+  .navbar span.hidden-xs {
+    display: inline !important;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  /* Fix navbar-text on mobile */
+  .navbar-text {
+    float: left;
+    margin-right: 0px;
+    margin-left: 15px;
   }
 }
