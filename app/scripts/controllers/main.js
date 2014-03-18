@@ -18,17 +18,17 @@ angular.module('marvelQuizApp')
 
 
     $scope.$on(QUIZ_EVENTS.quizStart, function(e, args) {
-      $scope.attemptedQuizzes = Score.registerAttemptedQuiz(args);
+      $scope.attemptedQuizzes = Score.registerAttemptedQuiz(args.quizName);
       $scope.successRate = Score.successRate();
     });
 
     $scope.$on(QUIZ_EVENTS.correctAnswer, function(e, args) {
-      Score.registerCorrectAnswer(args);
+      Score.registerCorrectAnswer(args.quizName);
       $scope.successRate = Score.successRate();
     });
 
     $scope.$on(QUIZ_EVENTS.wrongAnswer, function(e, args) {
-      Score.registerWrongAnswer(args);
+      Score.registerWrongAnswer(args.quizName);
       $scope.successRate = Score.successRate();
     });
 
