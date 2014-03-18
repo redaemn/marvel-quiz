@@ -112,7 +112,9 @@ module.exports = function (grunt) {
         src: 'app',
       },
       dist: {
-
+        options: {
+          src: '<%= yeoman.dist %>'
+        }
       },
       livereload: {
         options: {
@@ -300,6 +302,12 @@ module.exports = function (grunt) {
           src: ['generated/*']
         }]
       },
+      jekyll: {
+        expand: true,
+        cwd: '<%= yeoman.jekyllSite %>',
+        src: ['**'],
+        dest: '<%= yeoman.dist %>'
+      },
       styles: {
         expand: true,
         cwd: '<%= yeoman.app %>/styles',
@@ -402,6 +410,9 @@ module.exports = function (grunt) {
     'uglify',
     'rev',
     'usemin',
+    'jekyll:dist',
+    'clean:dist',
+    'copy:jekyll',
     'htmlmin'
   ]);
 
