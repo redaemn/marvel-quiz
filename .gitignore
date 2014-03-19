@@ -1,0 +1,6 @@
+_site
+node_modules
+dist
+app
+*.sublime-project
+*.sublime-workspace
