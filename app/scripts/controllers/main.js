@@ -12,24 +12,26 @@ angular.module('marvelQuizApp')
     // controller’s testability.
 
     // total number of quizzes attempted until now
-    $scope.attemptedQuizzes = Score.getAttemptedQuizzes();
+    $scope.attemptedQuizzes = function attemptedQuizzes() {
+      return Score.getAttemptedQuizzes();
+    };
+
     // percent success rate until now
-    $scope.successRate = Score.successRate();
+    $scope.successRate = function successRate() {
+      return Score.successRate();
+    };
 
 
     $scope.$on(QUIZ_EVENTS.quizStart, function(e, args) {
-      $scope.attemptedQuizzes = Score.registerAttemptedQuiz(args.quizName);
-      $scope.successRate = Score.successRate();
+      Score.registerAttemptedQuiz(args.quizName);
     });
 
     $scope.$on(QUIZ_EVENTS.correctAnswer, function(e, args) {
       Score.registerCorrectAnswer(args.quizName);
-      $scope.successRate = Score.successRate();
     });
 
     $scope.$on(QUIZ_EVENTS.wrongAnswer, function(e, args) {
       Score.registerWrongAnswer(args.quizName);
-      $scope.successRate = Score.successRate();
     });
 
   });

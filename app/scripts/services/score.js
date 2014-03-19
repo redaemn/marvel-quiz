@@ -7,11 +7,17 @@
 angular.module('marvelQuizApp')
   .service('Score', function Score(Cache) {
 
-    var scoreValues = Cache.get('scoreValues') || {
-      attemptedQuizzes: {},
-      correctAnswers: {},
-      wrongAnswers: {},
-    };
+    var scoreValues;
+
+    function _getEmptyScore() {
+      return {
+        attemptedQuizzes: {},
+        correctAnswers: {},
+        wrongAnswers: {},
+      };
+    }
+
+    scoreValues = Cache.get('scoreValues') || _getEmptyScore();
 
     function _saveScoreValues() {
       Cache.put('scoreValues', scoreValues, -1);
@@ -128,6 +134,14 @@ angular.module('marvelQuizApp')
     }
 
     /*
+     * Reset the current score with an empty one
+     */
+    function resetScore() {
+      scoreValues = _getEmptyScore();
+      _saveScoreValues();
+    }
+
+    /*
      * Public API
      */
     this.getAttemptedQuizzes = getAttemptedQuizzes;
@@ -135,4 +149,5 @@ angular.module('marvelQuizApp')
     this.registerCorrectAnswer = registerCorrectAnswer;
     this.registerWrongAnswer = registerWrongAnswer;
     this.successRate = successRate;
+    this.resetScore = resetScore;
   });

@@ -60,3 +60,11 @@ body {
     margin-left: 15px;
   }
 }
+
+table.options-table tfoot td {
+  padding: 0;
+}
+
+table.options-table tbody td:nth-child(2) {
+  vertical-align: middle;
+}

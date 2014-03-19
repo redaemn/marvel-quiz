@@ -17,6 +17,10 @@ angular.module('marvelQuizApp', [
         templateUrl: 'views/home.html',
         controller: 'HomeCtrl'
       })
+      .when('/options', {
+        templateUrl: 'views/options.html',
+        controller: 'OptionsCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });

@@ -14,10 +14,10 @@
         <span class="navbar-brand">Marvel QUIZ</span>
 
         <span class="navbar-text">
-          <span class="hidden-xs">Attempted</span> <span class="badge">{{attemptedQuizzes}}</span>
+          <span class="hidden-xs">Attempted</span> <span class="badge">{{attemptedQuizzes()}}</span>
         </span>
         <span class="navbar-text">
-          <span class="hidden-xs">Success</span> <span class="badge">{{successRate}}%</span>
+          <span class="hidden-xs">Success</span> <span class="badge">{{successRate()}}%</span>
         </span>
       </div>
 
@@ -38,6 +38,9 @@
 
         <!-- mobile menu -->
         <ul class="nav navbar-nav navbar-right">
+          <li ng-class="{ active: isActive('/options') }">
+            <a ng-href="#/options">Options</a>
+          </li>
           <li class="divider"></li>
           <li ng-repeat="quiz in quizzes" ng-class="{ active: isActive(quiz.route) }">
             <a ng-href="#{{quiz.route}}">{{quiz.displayName}}</a>
