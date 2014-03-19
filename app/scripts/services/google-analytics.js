@@ -5,7 +5,7 @@
  * the whole application through the injector
  */
 angular.module('marvelQuizApp.common')
-  .service('GoogleAnalytics', function GoogleAnalytics($window) {
+  .service('GoogleAnalytics', function GoogleAnalytics($window, $location) {
 
     var ga = angular.isFunction($window.ga) ? $window.ga : angular.noop;
 
@@ -13,7 +13,7 @@ angular.module('marvelQuizApp.common')
      * Register a pageview
      */
     function pageView() {
-      ga('send', 'pageview');
+      ga('send', 'pageview', $location.path());
     }
 
     /*

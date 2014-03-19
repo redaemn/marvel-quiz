@@ -1,12 +1,14 @@
 'use strict';
 
 angular.module('marvelQuizApp.quizzes')
-  .controller('mq.matchCharacters.MainCtrl', function ($scope, MarvelData, QUIZ_EVENTS) {
+  .controller('mq.matchCharacters.MainCtrl', function ($scope, MarvelData, QUIZ_EVENTS, GoogleAnalytics) {
 
     // contain the index of the currently selected name inside chosenNames array
     var currentNameSelected;
 
     function initQuiz() {
+
+      GoogleAnalytics.pageView();
 
       // contains the quiz's characters
       $scope.characters = [];
