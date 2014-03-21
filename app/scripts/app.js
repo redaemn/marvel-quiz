@@ -11,7 +11,7 @@ angular.module('marvelQuizApp', [
   // 'ngSanitize',
   'ngRoute'
 ])
-  .config(function ($routeProvider, MarvelWrapperProvider) {
+  .config(function ($routeProvider, $httpProvider, MarvelWrapperProvider) {
     $routeProvider
       .when('/', {
         templateUrl: 'views/home.html',
@@ -26,6 +26,20 @@ angular.module('marvelQuizApp', [
       });
 
     MarvelWrapperProvider.setApiKey('fad24ca2acf5adc8c2e73d2ad1a8b06a');
+
+    $httpProvider.interceptors.push('MarvelApiLimitExceededInterceptor');
+  })
+
+  .run(function ($rootScope, MarvelApiStatus, APP_STATE_EVENTS) {
+    $rootScope.$on('$locationChangeStart', function (event, next) {
+      var isQuizRoute = next.indexOf('/quiz/') > -1;
+
+      if (isQuizRoute && MarvelApiStatus.apiLimitExceeded()) {
+        event.preventDefault();
+        // notify the application that API limit was exceeded
+        $rootScope.$broadcast(APP_STATE_EVENTS.marvelApiLimitExceeded);
+      }
+    });
   });
 
 /*

@@ -6,7 +6,7 @@
  */
 
 angular.module('marvelQuizApp')
-  .controller('MainCtrl', function ($scope, QUIZ_EVENTS, Score) {
+  .controller('MainCtrl', function ($scope, QUIZ_EVENTS, Score, APP_STATE_EVENTS) {
     // REMEMBER!!! These properties should only be used in template expressions,
     // not from other controllers, because doing so would complicate the
     // controller’s testability.
@@ -32,6 +32,10 @@ angular.module('marvelQuizApp')
 
     $scope.$on(QUIZ_EVENTS.wrongAnswer, function(e, args) {
       Score.registerWrongAnswer(args.quizName);
+    });
+
+    $scope.$on(APP_STATE_EVENTS.marvelApiLimitExceeded, function () {
+      $scope.marvelApiLimitExceeded = true;
     });
 
   });

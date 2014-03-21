@@ -20,7 +20,7 @@ angular.module('marvelQuizApp.common')
     /*
      * Service constructor
      */
-    this.$get = function MarvelWrapper($http, Cache, $q, GoogleAnalytics) {
+    this.$get = function MarvelWrapper($http, Cache, $q, GoogleAnalytics, MarvelApiStatus) {
       var BASE_URL = '//gateway.marvel.com/v1/public';
 
       /*
@@ -38,14 +38,9 @@ angular.module('marvelQuizApp.common')
        * Common function that handles error responses from marvel services
        */
       function _marvelServiceError(res) {
-        // TODO: when maximum request number is exceeded, set some global variable
-        // that completely disable the application with an alert
-
-        // every time that a user access the application that has been disabled,
-        // signal it somewhere so that I can keep track of it
-
         if (res.status === 429) {
           GoogleAnalytics.marvelServiceLimitExceeded();
+          MarvelApiStatus.apiLimitExceeded(true);
         }
         else {
           GoogleAnalytics.marvelServiceError('' + res.status + ' - ' + res.data);

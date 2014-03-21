@@ -29,6 +29,8 @@
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
+    <marvel-api-limit-exceeded-modal data-toggle="marvelApiLimitExceeded"></marvel-api-limit-exceeded-modal>
+
     <!-- Add your site or application content here -->
     <div class="container">
       <div ng-include="'views/common/header.html'"></div>
@@ -90,8 +92,12 @@
         <script src="scripts/services/google-analytics.js"></script>
         <script src="scripts/services/quiz-events.js"></script>
         <script src="scripts/services/score.js"></script>
+        <script src="scripts/services/marvel-api-limit-exceeded-interceptor.js"></script>
+        <script src="scripts/services/marvel-api-status.js"></script>
+        <script src="scripts/services/app-state-events.js"></script>
 
         <script src="scripts/directives/marvel-link.js"></script>
+        <script src="scripts/directives/marvel-api-limit-exceeded-modal.js"></script>
 
         <!-- Available quizzes -->
         <script src="quizzes/matchCharacters/scripts/main.js"></script>
