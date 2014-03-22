@@ -1,10 +1,14 @@
 <p class="lead">
   Match every character image with its correct name.<br>
-  <span class="small text-muted">Click on two names to switch them.</span>
+  <span class="small text-muted">Click on two names to switch them, when you're ready click the Answer button.</span>
 </p>
 
 <div class="alert alert-info text-center" ng-show="loadingCharacters">
   Loading characters...
+</div>
+
+<div class="alert alert-danger text-center" ng-show="loadingError">
+  There was an error while loading characters, try reloading the page.
 </div>
 
 <div class="row">
@@ -28,7 +32,6 @@
               {{url.type}} <span class="glyphicon glyphicon-new-window"></span>
             </marvel-link>
           </li>
-          <!-- <br ng-repeat-end ng-if="!$last"> -->
         </ul>
       </div>
     </div>
@@ -42,8 +45,12 @@
     <div class="alert alert-danger text-center" ng-show="answered && !correctAnswer">&#x2718; Your answer is <strong>incorrect!</strong></div>
   </div>
   <div class="col-sm-7 text-right">
-    <button type="button" class="btn btn-primary" ng-click="checkAnswer()" ng-hide="answered || loadingCharacters">Answer</button>
-    <button type="button" class="btn btn-primary" ng-click="showSolution()" ng-show="answered && !correctAnswer">Show solution</button>
+    <button type="button" class="btn btn-primary" ng-click="checkAnswer()" ng-hide="answered || loadingCharacters || loadingError">
+      Answer
+    </button>
+    <button type="button" class="btn btn-primary" ng-click="showSolution()" ng-show="answered && !correctAnswer">
+      Show solution
+    </button>
     <button type="button" class="btn btn-default" ng-click="restart()" ng-show="answered">
       <span class="glyphicon glyphicon-refresh"></span> Play again
     </button>

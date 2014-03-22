@@ -20,30 +20,40 @@ angular.module('marvelQuizApp.quizzes')
       $scope.answered = false;
       // true if the user gave the correct answer; is meaningful only whe $scope.answered is true
       $scope.correctAnswer = false;
-      currentNameSelected = null;
+      // true while characters are loading
       $scope.loadingCharacters = true;
+      // true when an error occurred while loading characters
+      $scope.loadingError = false;
+
+      currentNameSelected = null;
 
       MarvelData.getRandomCharacter({
         count: 4,
         withImageAvailable: true
-      }).then(function(characters) {
-        angular.forEach(characters, function (character) {
-          $scope.characters.push({
-            image: character.thumbnail,
-            name: character.name,
-            urls: character.urls
+      }).then(
+        function(characters) {
+          angular.forEach(characters, function (character) {
+            $scope.characters.push({
+              image: character.thumbnail,
+              name: character.name,
+              urls: character.urls
+            });
+            $scope.chosenNames.push(character.name);
           });
-          $scope.chosenNames.push(character.name);
-        });
 
-        shuffleArray($scope.chosenNames);
+          shuffleArray($scope.chosenNames);
 
-        $scope.loadingCharacters = false;
+          $scope.loadingCharacters = false;
 
-        $scope.$emit(QUIZ_EVENTS.quizStart, {
-          quizName: 'matchCharacters'
-        });
-      });
+          $scope.$emit(QUIZ_EVENTS.quizStart, {
+            quizName: 'matchCharacters'
+          });
+        },
+        function () {
+          $scope.loadingCharacters = false;
+          $scope.loadingError = true;
+        }
+      );
 
     }
 
