@@ -293,7 +293,8 @@ module.exports = function (grunt) {
             'bower_components/**/*',
             'images/{,*/}*.{webp}',
             'fonts/*',
-            '_includes/**/*'
+            '_includes/**/*',
+            'sitemap.xml'
           ]
         }, {
           expand: true,
