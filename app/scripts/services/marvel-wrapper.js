@@ -38,13 +38,30 @@ angular.module('marvelQuizApp.common')
        * Common function that handles error responses from marvel services
        */
       function _marvelServiceError(res) {
+        var errorLog = '';
+
         if (res.status === 429) {
           GoogleAnalytics.marvelServiceLimitExceeded();
           MarvelApiStatus.apiLimitExceeded(true);
         }
-        else {
-          GoogleAnalytics.marvelServiceError('' + res.status + ' - ' + res.data);
+        else if(res.status === 0) {
+          GoogleAnalytics.marvelServiceError('0 - Aborted');
         }
+        else {
+          errorLog += res.status;
+
+          if (res.data.code) {
+            errorLog += ' - ' + res.data.code;
+          }
+
+          if (res.data.message) {
+            errorLog += ' - ' + res.data.message;
+          }
+
+          GoogleAnalytics.marvelServiceError(errorLog);
+        }
+
+        return $q.reject(res);
       }
 
       /*
