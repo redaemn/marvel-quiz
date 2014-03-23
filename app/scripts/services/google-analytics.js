@@ -33,6 +33,15 @@ angular.module('marvelQuizApp.common')
     }
 
     /*
+     * Register a cache hit for a Marvel service
+     *
+     * @param {String} service - name of the service that was requested
+     */
+    function marvelServiceCacheHit(service) {
+      ga('send', 'event', 'marvel-service', 'cache-hit', service);
+    }
+
+    /*
      * Register an error returned by a request to a Marvel service
      *
      * @param {String} message - the error message received in the response
@@ -55,6 +64,7 @@ angular.module('marvelQuizApp.common')
     this.pageView = pageView;
     this.marvelLinkClick = marvelLinkClick;
     this.marvelServiceRequest = marvelServiceRequest;
+    this.marvelServiceCacheHit = marvelServiceCacheHit;
     this.marvelServiceError = marvelServiceError;
     this.marvelServiceLimitExceeded = marvelServiceLimitExceeded;
 

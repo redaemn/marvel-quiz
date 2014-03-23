@@ -72,6 +72,7 @@ angular.module('marvelQuizApp.common')
         var cacheValue = Cache.get(CACHE_KEY);
 
         if (cacheValue) {
+          GoogleAnalytics.marvelServiceCacheHit('characters');
           return _future(cacheValue);
         }
         else {
@@ -101,6 +102,7 @@ angular.module('marvelQuizApp.common')
         var cacheValue = Cache.get(CACHE_KEY);
 
         if (cacheValue) {
+          GoogleAnalytics.marvelServiceCacheHit('characters');
           return _future(cacheValue);
         }
         else {
