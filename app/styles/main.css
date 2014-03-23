@@ -23,9 +23,16 @@ body {
   text-align: center;
   border-bottom: 1px solid #e5e5e5;
 }
-.jumbotron .btn {
-  font-size: 21px;
-  padding: 14px 24px;
+.jumbotron .logo {
+  display: inline-block;
+  position: relative;
+}
+.jumbotron .logo h2 {
+  font-size: 22px;
+  margin: 0;
+  position: absolute;
+  bottom: 0;
+  right: 0;
 }
 
 .view-container {
@@ -44,6 +51,12 @@ body {
   .jumbotron {
     border-bottom: 0;
   }
+
+  .jumbotron .btn {
+    font-size: 21px;
+    padding: 14px 24px;
+  }
+
   /* Add footer margins in mobile */
   .footer {
     margin-left: 15px;
@@ -55,6 +68,11 @@ body {
   }
   .navbar span.hidden-xs {
     display: inline !important;
+  }
+  .jumbotron .logo h2 {
+    font-size: 32px;
+    bottom: -4px;
+    right: 0;
   }
 }
 
