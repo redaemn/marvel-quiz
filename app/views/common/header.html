@@ -4,7 +4,7 @@
     <div class="container">
       <!-- Brand and toggle get grouped for better mobile display -->
       <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapsible-menu">
           <span class="sr-only">Toggle navigation</span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
@@ -25,7 +25,7 @@
       </div>
 
       <!-- Collect the nav links, forms, and other content for toggling -->
-      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <div class="collapse navbar-collapse" id="navbar-collapsible-menu">
 
         <!-- desktop menu -->
         <!-- <ul class="nav navbar-nav navbar-right hidden-xs">
@@ -42,11 +42,11 @@
         <!-- mobile menu -->
         <ul class="nav navbar-nav navbar-right">
           <li ng-class="{ active: isActive('/options') }">
-            <a ng-href="#/options">Options</a>
+            <a ng-href="#/options" data-toggle="collapse" data-target="#navbar-collapsible-menu">Options</a>
           </li>
           <li class="divider"></li>
           <li ng-repeat="quiz in quizzes" ng-class="{ active: isActive(quiz.route) }">
-            <a ng-href="#{{quiz.route}}">{{quiz.displayName}}</a>
+            <a ng-href="#{{quiz.route}}" data-toggle="collapse" data-target="#navbar-collapsible-menu">{{quiz.displayName}}</a>
           </li>
         </ul>
       </div><!-- /.navbar-collapse -->
