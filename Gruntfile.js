@@ -310,11 +310,6 @@ module.exports = function (grunt) {
           cwd: '<%= yeoman.jekyllSite %>',
           src: ['**'],
           dest: '<%= yeoman.dist %>'
-        }, {
-          expand: true,
-          cwd: '<%= yeoman.app %>',
-          src: ['bower_components'],
-          dest: '<%= yeoman.dist %>'
         }]
       },
       styles: {
