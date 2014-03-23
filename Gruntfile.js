@@ -113,7 +113,8 @@ module.exports = function (grunt) {
       },
       dist: {
         options: {
-          src: '<%= yeoman.dist %>'
+          src: '<%= yeoman.dist %>',
+          config: '.jekyll-dist.yml'
         }
       },
       livereload: {
@@ -304,10 +305,17 @@ module.exports = function (grunt) {
         }]
       },
       jekyll: {
-        expand: true,
-        cwd: '<%= yeoman.jekyllSite %>',
-        src: ['**'],
-        dest: '<%= yeoman.dist %>'
+        files: [{
+          expand: true,
+          cwd: '<%= yeoman.jekyllSite %>',
+          src: ['**'],
+          dest: '<%= yeoman.dist %>'
+        }, {
+          expand: true,
+          cwd: '<%= yeoman.app %>',
+          src: ['bower_components'],
+          dest: '<%= yeoman.dist %>'
+        }]
       },
       styles: {
         expand: true,
