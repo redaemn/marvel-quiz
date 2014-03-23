@@ -4,7 +4,7 @@
  * Offers higher level functionalities to access Marvel's data
  */
 angular.module('marvelQuizApp.common')
-  .service('MarvelData', function MarvelData(MarvelWrapper, $q) {
+  .service('MarvelData', function MarvelData(MarvelWrapper, $q, Utils) {
 
     var PAGE_SIZE = 10;
 
@@ -51,7 +51,7 @@ angular.module('marvelQuizApp.common')
 
     // get a single random character among all of them
     function _charactersGetRandom(totalCharacters) {
-      var randomCharacterNum = getRandomInt(0, totalCharacters - 1);
+      var randomCharacterNum = Utils.getRandomInt(0, totalCharacters - 1);
       var randomPage = Math.ceil((randomCharacterNum + 1 ) / PAGE_SIZE);
       return _charactersGetPage(randomPage)
         .then(function (characters) {
@@ -76,14 +76,6 @@ angular.module('marvelQuizApp.common')
     function isImageAvailable(character) {
       var regexp = /^.+\/image_not_available$/;
       return !regexp.test(character.thumbnail.path);
-    }
-
-    /*
-     * Generate a random integer between min and max (both inclusive)
-     * (put this inside a utility service)
-     */
-    function getRandomInt(min, max) {
-      return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
     /*

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('marvelQuizApp.quizzes')
-  .controller('mq.matchCharacters.MainCtrl', function ($scope, MarvelData, QUIZ_EVENTS, GoogleAnalytics) {
+  .controller('mq.matchCharacters.MainCtrl', function ($scope, MarvelData, QUIZ_EVENTS, GoogleAnalytics, Utils) {
 
     // contain the index of the currently selected name inside chosenNames array
     var currentNameSelected;
@@ -41,7 +41,7 @@ angular.module('marvelQuizApp.quizzes')
             $scope.chosenNames.push(character.name);
           });
 
-          shuffleArray($scope.chosenNames);
+          Utils.shuffleArray($scope.chosenNames);
 
           $scope.loadingCharacters = false;
 
@@ -151,28 +151,6 @@ angular.module('marvelQuizApp.quizzes')
       }
 
       return url;
-    }
-
-    // (put this inside a utility service)
-    function shuffleArray(array) {
-      var currentIndex = array.length,
-        tmp,
-        randomIndex;
-
-      // while there are elements to shuffle...
-      while (0 !== currentIndex) {
-
-        // pick a remaining element...
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex -= 1;
-
-        // swap it with the current element.
-        tmp = array[currentIndex];
-        array[currentIndex] = array[randomIndex];
-        array[randomIndex] = tmp;
-      }
-
-      return array;
     }
 
   });
