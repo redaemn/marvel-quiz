@@ -38,9 +38,18 @@
             </ul>
           </li>
         </ul> -->
+        <ul class="nav navbar-nav navbar-right hidden-xs">
+          <li ng-class="{ active: isActive('/options') }">
+            <a ng-href="#/options">Options</a>
+          </li>
+          <li class="divider"></li>
+          <li ng-repeat="quiz in quizzes" ng-class="{ active: isActive(quiz.route) }">
+            <a ng-href="#{{quiz.route}}">{{quiz.displayName}}</a>
+          </li>
+        </ul>
 
         <!-- mobile menu -->
-        <ul class="nav navbar-nav navbar-right">
+        <ul class="nav navbar-nav navbar-right visible-xs">
           <li ng-class="{ active: isActive('/options') }">
             <a ng-href="#/options" data-toggle="collapse" data-target="#navbar-collapsible-menu">Options</a>
           </li>
