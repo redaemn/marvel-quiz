@@ -20,7 +20,7 @@ angular.module('marvelQuizApp.common')
      * Register a click on a Marvel link
      */
     function marvelLinkClick() {
-      ga('send', 'event', 'button', 'click', 'marvel-link');
+      ga('send', 'event', 'marvel-link', 'click', $location.path());
     }
 
     /*
