@@ -32,25 +32,29 @@
 
     <marvel-api-limit-exceeded-modal data-toggle="marvelApiLimitExceeded"></marvel-api-limit-exceeded-modal>
 
-    <!-- Add your site or application content here -->
-    <div class="container">
-      <div ng-include="'views/common/header.html'"></div>
-      <noscript>
-        {% include common/header.html %}
-      </noscript>
-      <div class="view-container">
-        <div ng-view=""></div>
-        <noscript>
-          {% include home.html %}
-        </noscript>
-      </div>
-    </div>
-    <div ng-include="'views/common/footer.html'"></div>
-    <noscript>
-      {% include common/footer.html %}
-    </noscript>
+    <div class="wrapper">
 
-    <a href="https://docs.google.com/forms/d/18wY5Ckj9n8tKGy30m8Wc2BnIEn7OVhN4yqUe2_TmRts/viewform" target="_blank" class="feedback-button btn btn-xs btn-info">Feedback</a>
+      <!-- Add your site or application content here -->
+      <div class="container">
+        <div ng-include="'views/common/header.html'"></div>
+        <noscript>
+          {% include common/header.html %}
+        </noscript>
+        <div class="view-container">
+          <div ng-view=""></div>
+          <noscript>
+            {% include home.html %}
+          </noscript>
+        </div>
+      </div>
+      <div ng-include="'views/common/footer.html'"></div>
+      <noscript>
+        {% include common/footer.html %}
+      </noscript>
+
+      <a href="https://docs.google.com/forms/d/18wY5Ckj9n8tKGy30m8Wc2BnIEn7OVhN4yqUe2_TmRts/viewform" target="_blank" class="feedback-button btn btn-xs btn-info">Feedback</a>
+
+    </div><!-- .wrapper -->
 
     <!-- Google Analytics -->
     <script>

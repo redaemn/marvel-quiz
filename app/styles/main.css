@@ -1,11 +1,26 @@
+html, body {
+  height: 100%;
+}
+
 /* Space out content a bit */
 body {
   padding-top: 70px;
 }
 
+.wrapper {
+  min-height: 100%;
+  padding-bottom: 90px;
+  position: relative;
+}
+
 /* Custom page footer */
+.footer-wrapper {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+}
 .footer {
-  padding-top: 19px;
+  padding: 19px 0;
   color: #777;
   border-top: 1px solid #e5e5e5;
 }
