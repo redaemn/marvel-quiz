@@ -11,10 +11,20 @@ body {
   border-top: 1px solid #e5e5e5;
 }
 
+.feedback-button {
+  position: fixed;
+  bottom: -3px;
+  right: 30px;
+}
+
 /* Customize container */
 @media (min-width: 768px) {
   .container {
     max-width: 730px;
+  }
+  .feedback-button {
+    right: 50%;
+    margin-right: -335px;
   }
 }
 
