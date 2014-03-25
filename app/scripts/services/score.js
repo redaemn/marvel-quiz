@@ -7,20 +7,39 @@
 angular.module('marvelQuizApp')
   .service('Score', function Score(Cache) {
 
-    var scoreValues;
+    var scoreValues,
+      // represent the format version of the score object
+      currentScoreVersion = 1;
 
     function _getEmptyScore() {
       return {
+        version: currentScoreVersion,
         attemptedQuizzes: {},
         correctAnswers: {},
         wrongAnswers: {},
       };
     }
 
-    scoreValues = Cache.get('scoreValues') || _getEmptyScore();
+    /*
+     * Update the score object to the format of version newVersion
+     */
+    function _updateScoreToVersion(scores, newVersion) {
+      if (angular.isUndefined(scores.version)) {
+        scores.version = 1;
+      }
+
+      return scores;
+    }
 
     function _saveScoreValues() {
       Cache.put('scoreValues', scoreValues, -1);
+    }
+
+    scoreValues = Cache.get('scoreValues') || _getEmptyScore();
+
+    if (scoreValues.version !== currentScoreVersion) {
+      _updateScoreToVersion(scoreValues, currentScoreVersion);
+      _saveScoreValues();
     }
 
     /*
