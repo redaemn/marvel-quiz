@@ -30,6 +30,9 @@
         <h5 class="text-success">
           {{correctNames[$index]}}&nbsp;
         </h5>
+        <p>
+          Find out more about this character:
+        </p>
         <ul class="list-inline" style="text-transform: capitalize;">
           <li ng-repeat="url in character.urls" >
             <marvel-link url="{{url.url}}">
