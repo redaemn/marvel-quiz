@@ -6,12 +6,13 @@
 angular.module('marvelQuizApp.common')
   .service('MarvelData', function MarvelData(MarvelWrapper, $q, Utils) {
 
-    var PAGE_SIZE = 10;
-
-    var getRandomCharacterDefaultParams = {
-      count: 1,
-      withImageAvailable: false
-    };
+    var PAGE_SIZE = 10,
+      getRandomCharacterDefaultParams = {
+        count: 1,
+        withImageAvailable: false
+      },
+      randomIds,
+      randomIdsPtr = -1;
 
     /*
      * Retrieve random characters
@@ -51,8 +52,17 @@ angular.module('marvelQuizApp.common')
 
     // get a single random character among all of them
     function _charactersGetRandom(totalCharacters) {
-      var randomCharacterNum = Utils.getRandomInt(0, totalCharacters - 1);
-      var randomPage = Math.ceil((randomCharacterNum + 1 ) / PAGE_SIZE);
+      var randomCharacterNum,
+        randomPage;
+
+      if (randomIdsPtr < 0) {
+        randomIds = Utils.getRandomArray(0, totalCharacters - 1);
+        randomIdsPtr = totalCharacters - 1;
+      }
+
+      randomCharacterNum = randomIds[randomIdsPtr--];
+      randomPage = Math.ceil((randomCharacterNum + 1 ) / PAGE_SIZE);
+
       return _charactersGetPage(randomPage)
         .then(function (characters) {
           return characters[randomCharacterNum % PAGE_SIZE];

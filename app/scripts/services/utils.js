@@ -11,6 +11,20 @@ angular.module('marvelQuizApp.common')
     }
 
     /*
+     * Generate an array containing all numbers between min and max (both inclusive)
+     * randomly shuffled
+     */
+    function getRandomArray(min, max) {
+      var i, result = [];
+
+      for (i = min; i <= max; i++) {
+        result.push(i);
+      }
+
+      return shuffleArray(result);
+    }
+
+    /*
      * Shuffle the content of an array in place
      */
     function shuffleArray(array) {
@@ -38,5 +52,6 @@ angular.module('marvelQuizApp.common')
      * Public API
      */
     this.getRandomInt = getRandomInt;
+    this.getRandomArray = getRandomArray;
     this.shuffleArray = shuffleArray;
   });
