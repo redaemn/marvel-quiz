@@ -1,0 +1,15 @@
+.name-the-character-character-card {
+  display: inline-block;
+  max-width: 260px;
+}
+.name-the-character-choice-button {
+  width: 100%;
+  white-space: normal;
+}
+.name-the-character-character-card input[type="radio"] {
+  display: none;
+}
+
+.name-the-character-character-card .name-the-character-character-links {
+  text-transform: capitalize;
+}
