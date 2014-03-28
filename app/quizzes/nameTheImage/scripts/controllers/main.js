@@ -11,6 +11,7 @@ angular.module('marvelQuizApp.quizzes')
 
       GoogleAnalytics.pageView();
 
+      $scope.showIntro = false;
       // contains the currently chosen characters
       $scope.characters = [];
       // contains the names among which the user has to choose
@@ -56,9 +57,9 @@ angular.module('marvelQuizApp.quizzes')
 
     }
 
-    initQuiz();
+    $scope.showIntro = true;
 
-    $scope.restart = initQuiz;
+    $scope.startQuiz = initQuiz;
 
     $scope.$watch('selectedName', function(newVal, oldVal) {
       // executed ONLY when the user selects a name as an answer
