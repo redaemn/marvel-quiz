@@ -1,6 +1,6 @@
 .name-the-character-character-card {
   display: inline-block;
-  max-width: 260px;
+  width: 260px;
 }
 .name-the-character-choice-button {
   width: 100%;
