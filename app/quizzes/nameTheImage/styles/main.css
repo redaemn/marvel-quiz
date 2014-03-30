@@ -2,6 +2,10 @@
   display: inline-block;
   width: 260px;
 }
+.name-the-character-character-card img {
+  height: 250px;
+  width: 250px;
+}
 .name-the-character-choice-button {
   width: 100%;
   white-space: normal;
