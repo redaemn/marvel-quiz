@@ -4,3 +4,4 @@ dist
 app
 *.sublime-project
 *.sublime-workspace
+.tmp
