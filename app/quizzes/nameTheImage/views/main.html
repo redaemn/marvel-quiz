@@ -3,7 +3,14 @@
 </div>
 
 <div class="alert alert-danger text-center" ng-show="loadingError">
-  <i class="fa fa-times-circle"></i> There was an error, try reloading the page.
+  <div>
+    <p>
+      <i class="fa fa-times-circle"></i> Sorry, there was an error loading characters.
+    </p>
+    <button class="btn btn-sm btn-default" ng-click="startQuiz()">
+      <i class="fa fa-refresh"></i> Try again!
+    </button>
+  </div>
 </div>
 
 <div ng-show="showIntro">
