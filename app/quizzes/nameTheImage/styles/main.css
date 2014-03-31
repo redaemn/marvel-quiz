@@ -17,3 +17,27 @@
 .name-the-character-character-card .name-the-character-character-links {
   text-transform: capitalize;
 }
+
+.name-the-character-character-card .alert {
+  padding: 5px;
+  margin-bottom: 10px;
+}
+
+.name-the-character-cards-slider {
+  width: 100%;
+  overflow: hidden;
+}
+.name-the-character-cards-slider > ul {
+  display: inline-block;
+  white-space: nowrap;
+}
+.name-the-character-cards-slider > ul > li > .name-the-character-character-card {
+  white-space: normal;
+}
+.name-the-character-cards-slider > ul > li {
+  display: inline-block;
+  vertical-align: top;
+}
+.name-the-character-cards-slider > ul > li + li > .name-the-character-character-card {
+  margin-left: 15px;
+}
