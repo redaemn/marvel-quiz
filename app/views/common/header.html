@@ -42,10 +42,9 @@
           <li ng-class="{ active: isActive('/options') }">
             <a ng-href="#/options">Options</a>
           </li>
-          <li class="divider"></li>
-          <li ng-repeat="quiz in quizzes" ng-class="{ active: isActive(quiz.route) }">
+          <!-- <li ng-repeat="quiz in quizzes" ng-class="{ active: isActive(quiz.route) }">
             <a ng-href="#{{quiz.route}}">{{quiz.displayName}}</a>
-          </li>
+          </li> -->
         </ul>
 
         <!-- mobile menu -->
@@ -53,10 +52,9 @@
           <li ng-class="{ active: isActive('/options') }">
             <a ng-href="#/options" data-toggle="collapse" data-target="#navbar-collapsible-menu">Options</a>
           </li>
-          <li class="divider"></li>
-          <li ng-repeat="quiz in quizzes" ng-class="{ active: isActive(quiz.route) }">
+          <!-- <li ng-repeat="quiz in quizzes" ng-class="{ active: isActive(quiz.route) }">
             <a ng-href="#{{quiz.route}}" data-toggle="collapse" data-target="#navbar-collapsible-menu">{{quiz.displayName}}</a>
-          </li>
+          </li> -->
         </ul>
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
