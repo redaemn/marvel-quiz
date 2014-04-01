@@ -56,10 +56,8 @@ angular.module('marvelQuizApp.common')
         randomPage;
 
       if (randomIdsPtr < 0) {
-        // randomIds = Utils.getRandomArray(0, totalCharacters - 1);
-        // randomIdsPtr = totalCharacters - 1;
-        randomIds = [1,2,3];
-        randomIdsPtr = 2;
+        randomIds = Utils.getRandomArray(0, totalCharacters - 1);
+        randomIdsPtr = totalCharacters - 1;
       }
 
       randomCharacterNum = randomIds[randomIdsPtr--];
