@@ -18,6 +18,10 @@ angular.module('marvelQuizApp.quizzes')
       $scope.namesChoices = [];
       // name selected by the user
       $scope.selectedName = null;
+      // true when the user has clicked on an answer
+      $scope.answered = false;
+      // true when countdown has timed out
+      $scope.timeout = false;
       // true while characters are loading
       $scope.loadingCharacters = true;
       // true when an error occurred while loading characters
@@ -48,6 +52,8 @@ angular.module('marvelQuizApp.quizzes')
           $scope.$emit(QUIZ_EVENTS.quizStart, {
             quizName: QUIZ_UNIQUE_ID
           });
+
+          $scope.$broadcast('timer-start');
         },
         function () {
           $scope.loadingCharacters = false;
@@ -60,6 +66,13 @@ angular.module('marvelQuizApp.quizzes')
     $scope.showIntro = true;
 
     $scope.startQuiz = initQuiz;
+
+    $scope.answerSelected = function() {
+      if (!$scope.timeout) {
+        $scope.answered = true;
+        $scope.$broadcast('timer-stop');
+      }
+    };
 
     $scope.$watch('selectedName', function(newVal, oldVal) {
       // executed ONLY when the user selects a name as an answer
@@ -83,6 +96,14 @@ angular.module('marvelQuizApp.quizzes')
       angular.forEach(correctNames, function(name, idx) {
         $scope.characters[idx].name = name;
       });
+    });
+
+    $scope.$on('timer-stopped', function (){
+      if (!$scope.answered) {
+        $scope.timeout = true;
+        $scope.selectedName = '_obviously_wrong_';
+        $scope.$apply();
+      }
     });
 
   });

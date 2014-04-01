@@ -6,10 +6,8 @@
 angular.module('marvelQuizApp', [
   'marvelQuizApp.common',
   'marvelQuizApp.quizzes',
-  //'ngCookies',
-  // 'ngResource',
-  // 'ngSanitize',
-  'ngRoute'
+  'ngRoute',
+  'timer'
 ])
   .config(function ($routeProvider, $httpProvider, MarvelWrapperProvider) {
     $routeProvider

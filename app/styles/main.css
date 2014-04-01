@@ -38,6 +38,21 @@ body {
   right: 30px;
 }
 
+.quiz-timer-container {
+  z-index: 1031;
+  position: fixed;
+  top: 58px;
+  left: 0;
+  right: 0;
+}
+
+.quiz-timer {
+  width: 35px;
+  line-height: 35px;
+  margin: 0;
+  border-radius: 35px;
+}
+
 /* Customize container */
 @media (min-width: 768px) {
   .container {

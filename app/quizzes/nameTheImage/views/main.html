@@ -13,6 +13,16 @@
   </div>
 </div>
 
+<div class="quiz-timer-container" ng-hide="showIntro || selectedName">
+  <div class="container">
+    <timer autostart="false" interval="1000" countdown="6">
+      <h4 class="quiz-timer text-center" ng-class="{ 'bg-success text-success': seconds <= 6, 'bg-warning text-warning': seconds <= 4, 'bg-danger text-danger': seconds <= 2 }">
+        {{seconds}}
+      </h4>
+    </timer>
+  </div>
+</div>
+
 <div class="row">
   <div class="col-xs-12">
     <cards-slider></cards-slider>
@@ -21,7 +31,7 @@
 
 <div ng-show="showIntro">
   <p class="lead">
-    Choose the correct name for the character shown.
+    Choose the correct name for the character shown <em>before</em> the timer expires.
   </p>
   <p class="text-center">
     <button class="btn btn-primary" ng-click="startQuiz()">OK, got it!</button>
@@ -64,7 +74,7 @@
                 <li ng-repeat="name in namesChoices">
                   <p>
                     <input type="radio" ng-model="$parent.selectedName" value="{{name}}" id="name-the-character-choice-{{$index}}">
-                    <label for="name-the-character-choice-{{$index}}" class="btn btn-default btn-lg name-the-character-choice-button">
+                    <label for="name-the-character-choice-{{$index}}" class="btn btn-default btn-lg name-the-character-choice-button" ng-click="answerSelected()">
                       {{name}}
                     </label>
                   </p>
@@ -76,8 +86,12 @@
                   <i class="fa fa-check-circle"></i> Your answer is <strong>correct!</strong>
                 </div>
 
-                <div class="alert alert-danger text-center" ng-show="!correctAnswer">
+                <div class="alert alert-danger text-center" ng-show="!correctAnswer && !timeout">
                   <i class="fa fa-times-circle"></i> Your answer is <strong>not correct!</strong>
+                </div>
+
+                <div class="alert alert-danger text-center" ng-show="!correctAnswer && timeout">
+                  <i class="fa fa-times-circle"></i> Sorry, <strong>time's up!</strong>
                 </div>
 
                 <p>

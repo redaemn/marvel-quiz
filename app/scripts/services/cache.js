@@ -45,7 +45,7 @@ angular.module('marvelQuizApp.common')
         return false;
       }
       else {
-        return now - this.created > ( this.expiration || 1000 * 60 * 60 * 24); // 24 hours
+        return now - this.created > ( this.expiration || 1000 * 60 * 60 * 24 * 30); // 24 hours
       }
     };
 
