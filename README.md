@@ -12,3 +12,5 @@ The MIT License (MIT)
 Copyright &copy; 2014 Gabriele Rabbiosi https://plus.google.com/+GabrieleRabbiosi/
 
 <https://github.com/redaemn/marvel-quiz/blob/master/LICENSE>
+
+Data provided by [Marvel](http://marvel.com). © 2014 MARVEL
