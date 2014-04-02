@@ -1,3 +1,11 @@
+/*!
+ * <%= pkg.name %> v<%= pkg.version %> [https://github.com/redaemn/marvel-quiz]
+ * <%= grunt.template.today("yyyy-mm-dd") %>
+ *
+ * This software is licensed under The MIT License (MIT)
+ * Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %> [<%= pkg.author.url %>]
+ * [https://github.com/redaemn/marvel-quiz/blob/master/LICENSE]
+ */
 'use strict';
 
 /*

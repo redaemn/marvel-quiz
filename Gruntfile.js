@@ -18,6 +18,8 @@ module.exports = function (grunt) {
   // Define the configuration for all the tasks
   grunt.initConfig({
 
+    pkg: grunt.file.readJSON('package.json'),
+
     // Project settings
     yeoman: {
       // configurable paths
@@ -216,6 +218,24 @@ module.exports = function (grunt) {
       css: ['<%= yeoman.dist %>/styles/{,*/}*.css'],
       options: {
         assetsDirs: ['<%= yeoman.dist %>']
+      }
+    },
+
+    concat: {
+      options: {
+        process: function (src, filepath) {
+          if (filepath.indexOf('/scripts/app.js') > -1) {
+            return grunt.template.process(src);
+          }
+
+          return src;
+        }
+      }
+    },
+
+    uglify: {
+      options: {
+        preserveComments: 'some'
       }
     },
 

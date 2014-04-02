@@ -1,6 +1,18 @@
 {
   "name": "marvel-quiz",
   "version": "0.1.0",
+  "author": {
+    "name": "Gabriele Rabbiosi",
+    "url": "https://plus.google.com/+GabrieleRabbiosi/"
+  },
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/redaemn/marvel-quiz"
+  },
+  "license": {
+    "type": "MIT",
+    "url": "https://github.com/redaemn/marvel-quiz/blob/master/LICENSE"
+  },
   "dependencies": {},
   "devDependencies": {
     "grunt": "~0.4.1",
