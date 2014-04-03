@@ -41,16 +41,20 @@ body {
 .quiz-timer-container {
   z-index: 1031;
   position: fixed;
-  top: 58px;
+  top: 51px;
   left: 0;
   right: 0;
 }
 
-.quiz-timer {
-  width: 35px;
-  line-height: 35px;
-  margin: 0;
-  border-radius: 35px;
+.quiz-timer-container .progress {
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  height: 12px;
+}
+
+.quiz-timer-container .progress-bar {
+  transition: width 1s linear, background-color .3s;
 }
 
 /* Customize container */

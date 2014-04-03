@@ -22,6 +22,8 @@ angular.module('marvelQuizApp.quizzes')
       $scope.answered = false;
       // true when countdown has timed out
       $scope.timeout = false;
+      // width of timer progress bar
+      $scope.progressWidth = 100;
       // true while characters are loading
       $scope.loadingCharacters = true;
       // true when an error occurred while loading characters
@@ -103,6 +105,15 @@ angular.module('marvelQuizApp.quizzes')
         $scope.timeout = true;
         $scope.selectedName = '_obviously_wrong_';
         $scope.$apply();
+      }
+    });
+
+    $scope.$on('timer-tick', function(event, data) {
+      $scope.progressWidth = 100 * (6 - Math.ceil(data.millis / 1000)) / 6;
+      // set 100 millis more because otherwise the timer will stop when the
+      // progress bar is still not completely to 0%
+      if (data.millis >= 6100) {
+        $scope.$broadcast('timer-stop');
       }
     });
 

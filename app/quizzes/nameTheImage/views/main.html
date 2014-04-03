@@ -14,13 +14,11 @@
 </div>
 
 <div class="quiz-timer-container" ng-hide="showIntro || loadingCharacters || loadingError || selectedName">
-  <div class="container">
-    <timer autostart="false" interval="1000" countdown="6">
-      <h4 class="quiz-timer text-center" ng-class="{ 'bg-success text-success': seconds <= 6, 'bg-warning text-warning': seconds <= 4, 'bg-danger text-danger': seconds <= 2 }">
-        {{seconds}}
-      </h4>
-    </timer>
-  </div>
+  <timer autostart="false">
+    <div class="progress">
+      <div class="progress-bar" ng-class="{ 'progress-bar-success': $parent.progressWidth <= 100, 'progress-bar-warning': $parent.progressWidth <= 66, 'progress-bar-danger': $parent.progressWidth <= 33 }" style="width: {{$parent.progressWidth}}%;"></div>
+    </div>
+  </timer>
 </div>
 
 <div class="row">
