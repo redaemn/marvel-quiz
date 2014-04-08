@@ -54,7 +54,10 @@ body {
 }
 
 .quiz-timer-container .progress-bar {
-  transition: width 1s linear, background-color .3s;
+  -webkit-transition: background-color .3s;
+  -moz-transition: background-color .3s;
+  -o-transition: background-color .3s;
+  transition: background-color .3s;
 }
 
 /* Customize container */

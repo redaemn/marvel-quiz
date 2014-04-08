@@ -36,7 +36,7 @@
   </p>
 </div>
 
-<div class="row" ng-hide="showIntro">
+<div class="row" ng-hide="showIntro || loadingCharacters">
   <div class="text-center col-xs-12">
     <div class="text-center name-the-character-cards-slider" data-cards-slider data-refresh="selectedName">
       <ul class="list-unstyled">
@@ -44,7 +44,7 @@
         <li>
           <div class="thumbnail name-the-character-character-card" ng-show="characters.length">
 
-            <img ng-if="characters.length" ng-src="{{characters[0].image.path}}/standard_fantastic.{{characters[0].image.extension}}">
+            <img ng-if="characters.length" ng-src="{{characters[0].image.path}}/standard_fantastic.{{characters[0].image.extension}}" data-on-load="onQuizImageLoaded()">
 
             <div class="caption">
 

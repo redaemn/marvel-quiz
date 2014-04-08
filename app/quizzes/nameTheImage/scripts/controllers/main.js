@@ -49,13 +49,9 @@ angular.module('marvelQuizApp.quizzes')
 
           Utils.shuffleArray($scope.namesChoices);
 
-          $scope.loadingCharacters = false;
-
           $scope.$emit(QUIZ_EVENTS.quizStart, {
             quizName: QUIZ_UNIQUE_ID
           });
-
-          $scope.$broadcast('timer-start');
         },
         function () {
           $scope.loadingCharacters = false;
@@ -109,12 +105,17 @@ angular.module('marvelQuizApp.quizzes')
     });
 
     $scope.$on('timer-tick', function(event, data) {
-      $scope.progressWidth = 100 * (6 - Math.ceil(data.millis / 1000)) / 6;
+      $scope.progressWidth = 100 * (600 - Math.ceil(data.millis / 10)) / 600;
       // set 100 millis more because otherwise the timer will stop when the
       // progress bar is still not completely to 0%
-      if (data.millis >= 6100) {
+      if (data.millis >= 6000) {
         $scope.$broadcast('timer-stop');
       }
     });
+
+    $scope.onQuizImageLoaded = function () {
+      $scope.$broadcast('timer-start');
+      $scope.loadingCharacters = false;
+    };
 
   });
