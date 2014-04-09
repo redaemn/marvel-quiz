@@ -80,12 +80,18 @@ body {
   display: inline-block;
   position: relative;
 }
+.jumbotron .logo h1 {
+  margin-top: 0;
+}
 .jumbotron .logo h2 {
   font-size: 22px;
   margin: 0;
   position: absolute;
   bottom: 0;
   right: 0;
+}
+.jumbotron :last-child {
+  margin-bottom: 0;
 }
 
 .view-container {
