@@ -15,6 +15,32 @@
   </div>
 
   <p>
+    <div>
+      <div id="socialScripts"></div>
+    </div>
+    <div class="row">
+      <div class="text-center col-xs-6">
+        <div class="g-plusone" data-href="http://git.io/marvel-quiz"></div>
+      </div>
+      <div class="text-center col-xs-6">
+        <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://git.io/marvel-quiz" data-via="redaemn">Tweet</a>
+      </div>
+    </div>
+  </p>
+
+  <p>
     <a class="btn btn-lg btn-success" ng-href="#/quiz/name-the-image">Let's play!</a>
   </p>
 </div>
+
+<!-- G+ button -->
+<script type="text/javascript">
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/platform.js';
+    var s = document.getElementById('socialScripts'); s.parentNode.insertBefore(po, s);
+  })();
+</script>
+
+<!-- Twitter button -->
+<script>!function(d,s,id){var js,fjs=d.getElementById(s),p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement('script');js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'socialScripts', 'twitter-wjs');</script>
