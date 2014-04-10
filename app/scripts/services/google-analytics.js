@@ -59,6 +59,15 @@ angular.module('marvelQuizApp.common')
     }
 
     /*
+     * Register how many times a feature was used
+     *
+     * @param {String} feature - the unique name of the feature
+     */
+    function featureUsage(feature) {
+      ga('send', 'event', 'feature-usage', feature);
+    }
+
+    /*
      * Public API
      */
     this.pageView = pageView;
@@ -67,5 +76,6 @@ angular.module('marvelQuizApp.common')
     this.marvelServiceCacheHit = marvelServiceCacheHit;
     this.marvelServiceError = marvelServiceError;
     this.marvelServiceLimitExceeded = marvelServiceLimitExceeded;
+    this.featureUsage = featureUsage;
 
   });

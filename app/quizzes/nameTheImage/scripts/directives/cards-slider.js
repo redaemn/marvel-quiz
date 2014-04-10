@@ -4,7 +4,7 @@
  * Make a bunch of character cards scrollable horizontally
  */
 angular.module('marvelQuizApp.quizzes')
-  .directive('cardsSlider', function ($timeout, $window) {
+  .directive('cardsSlider', function ($timeout, $window, GoogleAnalytics) {
 
     return {
       scope: {
@@ -16,6 +16,10 @@ angular.module('marvelQuizApp.quizzes')
           eventPassthrough: true,
           scrollX: true,
           scrollY: false
+        });
+
+        scroller.on('scrollStart', function () {
+          GoogleAnalytics.featureUsage('cards slider scrolling');
         });
 
         $scope.$watch('refresh', function() {
