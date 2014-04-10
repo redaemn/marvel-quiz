@@ -9,7 +9,7 @@ angular.module('marvelQuizApp')
 
     var scoreValues,
       // represent the format version of the score object
-      currentScoreVersion = 1;
+      currentScoreVersion = 2;
 
     function _getEmptyScore() {
       return {
@@ -17,15 +17,21 @@ angular.module('marvelQuizApp')
         attemptedQuizzes: {},
         correctAnswers: {},
         wrongAnswers: {},
+        points: {}
       };
     }
 
     /*
-     * Update the score object to the format of version newVersion
+     * Update the score object to the current version format
      */
-    function _updateScoreToVersion(scores, newVersion) {
+    function _updateScoreToCurrentVersion(scores) {
       if (angular.isUndefined(scores.version)) {
         scores.version = 1;
+      }
+
+      if (scores.version === 1) {
+        scores.version = 2;
+        scores.points = {};
       }
 
       return scores;
@@ -38,7 +44,7 @@ angular.module('marvelQuizApp')
     scoreValues = Cache.get('scoreValues') || _getEmptyScore();
 
     if (scoreValues.version !== currentScoreVersion) {
-      _updateScoreToVersion(scoreValues, currentScoreVersion);
+      _updateScoreToCurrentVersion(scoreValues);
       _saveScoreValues();
     }
 
@@ -84,14 +90,22 @@ angular.module('marvelQuizApp')
     }
 
     /*
-     * Increment the number of correct answers for a particular quiz and return the new value
+     * Register a correct answer for a particular quiz and return the new value
+     *
+     * @param {Object} args
+     * @param {String} args.quizName - the quiz unique identifier for which we are
+     *   registering a correct answer
+     * @param {Number} args.points - the number of points gained with the answer
      */
-    function registerCorrectAnswer(quizName) {
+    function registerCorrectAnswer(args) {
+      var quizName = args.quizName;
+
       if (!angular.isString(quizName)) {
         throw new Error('Score[registerCorrectAnswer()]: quizName parameter is not valid');
       }
 
       scoreValues.correctAnswers[quizName] = ( scoreValues.correctAnswers[quizName] || 0 ) + 1;
+      scoreValues.points[quizName] = ( scoreValues.points[quizName] || 0 ) + ( args.points || 0 );
       _saveScoreValues();
 
       return scoreValues.correctAnswers[quizName];
@@ -104,6 +118,19 @@ angular.module('marvelQuizApp')
       var result = 0;
 
       angular.forEach(scoreValues.correctAnswers, function (val) {
+        result += val;
+      });
+
+      return result;
+    }
+
+    /*
+     * Return the number of poits gained for all the quizzes
+     */
+    function _getPointsTotal() {
+      var result = 0;
+
+      angular.forEach(scoreValues.points, function (val) {
         result += val;
       });
 
@@ -129,20 +156,20 @@ angular.module('marvelQuizApp')
      * for all of them
      *
      * @params {String} [quizName] - if given, return the value for that
-     *   particular quiz, otherwise return the total value
+     *   particular quiz, otherwise return the total value for all the quizzes
      */
     function successRate(quizName) {
       var rate,
         attemptedQuizzes,
         correctAnswers;
 
-      if (quizName && scoreValues.attemptedQuizzes[quizName] && scoreValues.correctAnswers[quizName]) {
-        attemptedQuizzes = scoreValues.attemptedQuizzes[quizName];
-        correctAnswers = scoreValues.correctAnswers[quizName];
-      }
-      else {
+      if (!quizName) {
         attemptedQuizzes = _getAttemptedQuizzesTotal();
         correctAnswers = _getCorrectAnswersTotal();
+      }
+      else {
+        attemptedQuizzes = scoreValues.attemptedQuizzes[quizName] || 0;
+        correctAnswers = scoreValues.correctAnswers[quizName] || 0;
       }
 
       rate = attemptedQuizzes !== 0 ?
@@ -150,6 +177,21 @@ angular.module('marvelQuizApp')
         0;
 
       return (rate * 100).toFixed(2);
+    }
+
+    /*
+     * Return the number of points gained for a particuar quiz or for all of them
+     *
+     * @params {String} [quizName] - if given, return the value for that
+     *   particular quiz, otherwise return the total value for all the quizzes
+     */
+    function currentPoints(quizName) {
+      if (!quizName) {
+        return _getPointsTotal();
+      }
+      else {
+        return scoreValues.points[quizName] || 0;
+      }
     }
 
     /*
@@ -168,5 +210,6 @@ angular.module('marvelQuizApp')
     this.registerCorrectAnswer = registerCorrectAnswer;
     this.registerWrongAnswer = registerWrongAnswer;
     this.successRate = successRate;
+    this.currentPoints = currentPoints;
     this.resetScore = resetScore;
   });

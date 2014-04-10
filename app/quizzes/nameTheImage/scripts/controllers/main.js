@@ -5,7 +5,9 @@ angular.module('marvelQuizApp.quizzes')
 
     var QUIZ_UNIQUE_ID = 'nameTheImage',
       // contains the correctly sorted names, used to show user the solution
-      correctNames;
+      correctNames,
+      // contains millis at which the timer was stopped
+      timerStoppedMillis;
 
     function initQuiz() {
 
@@ -72,6 +74,25 @@ angular.module('marvelQuizApp.quizzes')
       }
     };
 
+    function _calculatePoints(millis, lowCut, highCut) {
+      var retVal;
+
+      if (millis <= lowCut) {
+        retVal = 10;
+      }
+      else if (millis > 6000) {
+        retVal = 0;
+      }
+      else if (millis >= highCut) {
+        retVal = 1;
+      }
+      else {
+        retVal = 10 - Math.ceil( (millis - lowCut) / Math.ceil((highCut - lowCut) / 8) );
+      }
+
+      return retVal;
+    }
+
     $scope.$watch('selectedName', function(newVal, oldVal) {
       // executed ONLY when the user selects a name as an answer
       if (newVal === oldVal || newVal === null) {
@@ -81,7 +102,8 @@ angular.module('marvelQuizApp.quizzes')
       if ($scope.selectedName === correctNames[0]) {
         $scope.correctAnswer = true;
         $scope.$emit(QUIZ_EVENTS.correctAnswer, {
-          quizName: QUIZ_UNIQUE_ID
+          quizName: QUIZ_UNIQUE_ID,
+          points: _calculatePoints(timerStoppedMillis, 2000, 4000)
         });
       }
       else {
@@ -96,7 +118,9 @@ angular.module('marvelQuizApp.quizzes')
       });
     });
 
-    $scope.$on('timer-stopped', function (){
+    $scope.$on('timer-stopped', function (event, data){
+      timerStoppedMillis = data.millis;
+
       if (!$scope.answered) {
         $scope.timeout = true;
         $scope.selectedName = '_obviously_wrong_';

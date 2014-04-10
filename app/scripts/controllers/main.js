@@ -7,27 +7,12 @@
 
 angular.module('marvelQuizApp')
   .controller('MainCtrl', function ($scope, QUIZ_EVENTS, Score, APP_STATE_EVENTS) {
-    // REMEMBER!!! These properties should only be used in template expressions,
-    // not from other controllers, because doing so would complicate the
-    // controller’s testability.
-
-    // total number of quizzes attempted until now
-    $scope.attemptedQuizzes = function attemptedQuizzes() {
-      return Score.getAttemptedQuizzes();
-    };
-
-    // percent success rate until now
-    $scope.successRate = function successRate() {
-      return Score.successRate();
-    };
-
-
     $scope.$on(QUIZ_EVENTS.quizStart, function(e, args) {
       Score.registerAttemptedQuiz(args.quizName);
     });
 
     $scope.$on(QUIZ_EVENTS.correctAnswer, function(e, args) {
-      Score.registerCorrectAnswer(args.quizName);
+      Score.registerCorrectAnswer(args);
     });
 
     $scope.$on(QUIZ_EVENTS.wrongAnswer, function(e, args) {
